@@ -21,9 +21,6 @@
                                         <div class="card-body p-3">
                                             <div class="card-subtitle">
                                                 {{ Str::limit($aparelho->descricao, 25, '...') }}</div>
-                                            <img width="193px" height="122px"
-                                                src="{{ url('/storage/aparelhos/' . $aparelho->image_url) }}"
-                                                alt="Photo 1" class="img-fluid">
                                         </div>
                                     </div>
                                 @endforeach

@@ -1,54 +1,37 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <title>Gestão de eventos</title>
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 
+    <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href={{ asset('theme/plugins/fontawesome-free/css/all.css') }}>
-    <!-- Tempusdominus Bootstrap 4 -->
-    <link rel="stylesheet"
-        href={{ asset('theme/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}>
+    <link rel="stylesheet" href={{ asset('theme/plugins/fontawesome-free/css/all.min.css') }}>
     <!-- SweetAlert2 -->
     <link rel="stylesheet" href={{ asset('theme/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}>
     <!-- Toastr -->
     <link rel="stylesheet" href={{ asset('theme/plugins/toastr/toastr.min.css') }}>
-    <!-- iCheck -->
-    <link rel="stylesheet" href={{ asset('theme/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}>
-    <!-- JQVMap -->
-    <link rel="stylesheet" href={{ asset('theme/plugins/jqvmap/jqvmap.min.css') }}>
     <!-- Theme style -->
     <link rel="stylesheet" href={{ asset('theme/dist/css/adminlte.min.css') }}>
-    <!-- overlayScrollbars -->
-    <link rel="stylesheet" href={{ asset('theme/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}>
-    <!-- Daterange picker -->
-    <link rel="stylesheet" href={{ asset('theme/plugins/daterangepicker/daterangepicker.css') }}>
-    <!-- summernote -->
-    <link rel="stylesheet" href={{ asset('theme/plugins/summernote/summernote-bs4.min.css') }}>
 </head>
 
 <body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100">
-        @include('layouts.navigation')
+    <div class="wrapper">
+        @include('layouts.admin_navigation')
+        <div class="content-wrapper min-h-screen bg-gray-100">
 
-        <!-- Page Content -->
-        <main>
-            {{ $slot }}
-        </main>
+            <main>
+                {{ $slot }}
+            </main>
+        </div>
     </div>
 
     @livewireScripts

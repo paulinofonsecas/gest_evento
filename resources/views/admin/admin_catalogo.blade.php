@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Modals & Alerts</title>
+    <title>Gestão de eventos</title>
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -24,62 +24,45 @@
 </head>
 
 <body class="hold-transition">
-    <div class="min-h-screen bg-gray-100">
-        @include('layouts.navigation')
-        <div class="py-7">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-gray-900">
-                        <div class="card card-primary">
-                            <div class="card-header">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <h4 class="card-title">Produtos</h4>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="col-4  float-right">
-                                            <a href="{{ route('aparelho.create') }}"
-                                                class="btn btn-block btn-dark float-right">
-                                                Novo produto
-                                            </a>
+    <div class="wrapper">
+        @include('layouts.admin_navigation')
+        <div class="content-wrapper min-h-screen bg-gray-100">
+            <div class="py-7">
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                        <div class="p-6 text-gray-900">
+                            <div class="card card-primary">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <h4 class="card-title">Produtos</h4>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div>
-                                    <div class="btn-group w-100 mb-2">
-                                        <a class="btn btn-info" href="javascript:void(0)" data-filter="all">
-                                            All items </a>
-                                        <a class="btn btn-info" href="javascript:void(0)" data-filter="1">
-                                            Musica
-                                        </a>
-                                        <a class="btn btn-info" href="javascript:void(0)" data-filter="2">
-                                            Luzes
-                                        </a>
-                                        <a class="btn btn-info" href="javascript:void(0)" data-filter="3">
-                                            Descoracao
-                                        </a>
-                                    </div>
-                                    
-                                </div>
-                                <div class="row ">
-                                    @foreach ($aparelhos as $aparelho)
-                                        <div
-                                            class="col-3 card card-outline card-primary mr-3 mt-3">
-                                            <a href="{{ url('/admin/aparelho/' . $aparelho->id) }}">
-                                                <div class="card-header">
-                                                    <h6>{{ Str::limit($aparelho->nome, 25, '...') }}</h6 >
-                                                </div>
-                                            </a>
-                                            <div class="card-body p-3">
-                                                <div class="card-subtitle">
-                                                    {{ Str::limit($aparelho->descricao, 22, '...') }}</div>
-                                                <img width="193px" height="122px" src="{{ url('/storage/aparelhos/' . $aparelho->image_url) }}"
-                                                    alt="Photo 1" class="img-fluid">
+                                        <div class="col-6">
+                                            <div class="col-4  float-right">
+                                                <a href="{{ route('aparelhos.create') }}"
+                                                    class="btn btn-block btn-dark float-right">
+                                                    Novo produto
+                                                </a>
                                             </div>
                                         </div>
-                                    @endforeach
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row ">
+                                        @foreach ($aparelhos as $aparelho)
+                                            <div class="col-3 card card-outline card-primary mr-3 mt-3">
+                                                <a href="{{ url('/admin/aparelhos/' . $aparelho->id) }}">
+                                                    <div class="card-header">
+                                                        <h6>{{ Str::limit($aparelho->nome, 25, '...') }}</h6>
+                                                    </div>
+                                                </a>
+                                                <div class="card-body p-3">
+                                                    <div class="card-subtitle">
+                                                        {{ Str::limit($aparelho->descricao, 25, '...') }}</div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
                         </div>

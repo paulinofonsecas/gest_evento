@@ -1,6 +1,6 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
 
-    <a href="index3.html" class="brand-link">
+    <a href=" {{ route('dashboard') }}" class="brand-link">
         <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
         <span class="brand-text font-weight-light">Gestão de eventos</span>
     </a>
@@ -39,8 +39,8 @@
                             </li>
 
                             <li class="nav-item">
-                                <a href="{{ route('evento.index') }}"
-                                    class="nav-link {{ request()->routeIs('evento.*') ? 'active' : '' }}">
+                                <a href="{{ route('eventos.index') }}"
+                                    class="nav-link {{ request()->routeIs('eventos.*') ? 'active' : '' }}">
                                     <i class="nav-icon fa-solid fa-calendar-days"></i>
                                     <p>
                                         Eventos
@@ -49,8 +49,8 @@
                             </li>
 
                             <li class="nav-item">
-                                <a href="{{ route('aparelho.index') }}"
-                                    class="nav-link {{ request()->routeIs('aparelho.*') ? 'active' : '' }}">
+                                <a href="{{ route('aparelhos.index') }}"
+                                    class="nav-link {{ request()->routeIs('aparelhos.*') ? 'active' : '' }}">
                                     <i class="fa-solid fa-cart-plus nav-icon"></i>
                                     <p>
                                         Produtos

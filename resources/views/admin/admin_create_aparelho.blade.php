@@ -50,60 +50,62 @@
 </head>
 
 <body class="hold-transition">
-    <div class="min-h-screen bg-gray-100">
-        @include('layouts.navigation')
-        <div class="py-7">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-gray-900">
-                        <div class="card card-primary card-outline">
-                            <div class="card-header">
-                                <div class="col-6">
-                                    <h2 class="card-title">Criar produto</h2>
+    <div class="wrapper">
+        @include('layouts.admin_navigation')
+        <div class="content-wrapper min-h-screen bg-gray-100">
+            <div class="py-7">
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                        <div class="p-6 text-gray-900">
+                            <div class="card card-primary card-outline">
+                                <div class="card-header">
+                                    <div class="col-6">
+                                        <h2 class="card-title">Criar produto</h2>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="card-body">
-                                <form method="POST" action="{{ route('aparelho.store') }}"
-                                    enctype="multipart/form-data">
-                                    @csrf
-                                    <div class="card-body">
-                                        <div class="form-group">
-                                            <x-input-label for="nome" :value="__('Nome')" />
-                                            <x-text-input id="nome" class="block mt-1 w-full" type="text"
-                                                name="nome" required autofocus autocomplete="username" />
-                                            
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="descricao">Descrição</label>
-                                            <textarea class="form-control" name="descricao" id="descricao" rows="3" placeholder="Descreva o aparelho"></textarea>
-                                            
-                                        </div>
+                                <div class="card-body">
+                                    <form method="POST" action="{{ route('aparelhos.store') }}"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <x-input-label for="nome" :value="__('Nome')" />
+                                                <x-text-input id="nome" class="block mt-1 w-full" type="text"
+                                                    name="nome" required autofocus autocomplete="username" />
 
-                                        <div class="form-group">
-                                            <label for="precoAluger">Preço de aluguer</label>
-                                            <input type="number" name="precoAluger" class="form-control"
-                                                id="precoAluger" placeholder="Preço de aluger">
-                                            
-                                        </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="descricao">Descrição</label>
+                                                <textarea class="form-control" name="descricao" id="descricao" rows="3" placeholder="Descreva o aparelho"></textarea>
 
-                                        <div class="form-group">
-                                            <label for="imageFile">Imagem do aparelho</label>
-                                            <div class="input-group">
-                                                <div class="custom-file">
-                                                    <input type="file" name="imageFile" class="custom-file-input"
-                                                        id="imagefile">
-                                                    <label class="custom-file-label" for="imageFile">Escolha o
-                                                        arquivo</label>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="precoAluger">Preço de aluguer</label>
+                                                <input type="number" name="precoAluger" class="form-control"
+                                                    id="precoAluger" placeholder="Preço de aluger">
+
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="imageFile">Imagem do aparelho</label>
+                                                <div class="input-group">
+                                                    <div class="custom-file">
+                                                        <input type="file" name="imageFile" class="custom-file-input"
+                                                            id="imagefile">
+                                                        <label class="custom-file-label" for="imageFile">Escolha o
+                                                            arquivo</label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="modal-footer justify-content-between">
-                                        <button type="button" class="btn btn-default"
-                                            data-dismiss="modal">Cancelar</button>
-                                        <button type="submit" class="btn btn-primary">Enviar</button>
-                                    </div>
-                                </form>
+                                        <div class="modal-footer justify-content-between">
+                                            <button type="button" class="btn btn-default"
+                                                data-dismiss="modal">Cancelar</button>
+                                            <button type="submit" class="btn btn-primary">Enviar</button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>

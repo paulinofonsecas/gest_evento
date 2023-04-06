@@ -26,18 +26,6 @@
             <x-input-error :messages="$errors->get('bi')" class="mt-2" />
         </div>
 
-        <!-- UserType -->
-        <div class="mt-4">
-            <x-input-label for="userType" :value="__('Tipo de usuario')" />
-            <select
-                class="block font-medium text-sm text-gray-700border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
-                name="usertype" id="userType" style="width: 100%">
-                @foreach ($usertypes as $usertype)
-                    <option value="{{ $usertype->id }}">{{ Str::upper($usertype->descricao) }}</option>
-                @endforeach
-            </select>
-        </div>
-
         <!-- Password -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />

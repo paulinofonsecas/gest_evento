@@ -12,6 +12,8 @@ class ClienteLayout extends Component
      */
     public function render(): View
     {
-        return view('layouts.cliente');
+        return view('layouts.cliente', [
+            'usuario' => auth()->user(),
+        ]);
     }
 }

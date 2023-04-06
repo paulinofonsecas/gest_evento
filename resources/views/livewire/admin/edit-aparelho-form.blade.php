@@ -51,61 +51,67 @@
 
 <body class="hold-transition">
     <div class="min-h-screen bg-gray-100">
-        @include('layouts.navigation')
-        <div class="py-7">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-gray-900">
-                        <div class="card card-primary card-outline">
-                            <div class="card-header">
-                                <div class="col-6">
-                                    <h2 class="card-title">Editar aparelhos</h2>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <form method="post"
-                                    action="{{ route('admin_update_aparelho', ['id' => $aparelho->id]) }}"
-                                    enctype="multipart/form-data">
-                                    @csrf
+        <div class="wrapper">
+            @include('layouts.navigation')
+            <div class="content-wrapper min-h-screen bg-gray-100">
+                <div class="py-7">
+                    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                            <div class="p-6 text-gray-900">
+                                <div class="card card-primary card-outline">
+                                    <div class="card-header">
+                                        <div class="col-6">
+                                            <h2 class="card-title">Editar aparelhos</h2>
+                                        </div>
+                                    </div>
                                     <div class="card-body">
-                                        <div class="form-group">
-                                            <x-input-label for="nome" :value="__('Nome')" />
-                                            <input value="{{ $aparelho->nome }}" id="nome"
-                                                class="block mt-1 w-full" type="text" name="nome" required
-                                                autofocus autocomplete="username" />
+                                        <form method="post"
+                                            action="{{ route('admin_update_aparelho', ['id' => $aparelho->id]) }}"
+                                            enctype="multipart/form-data">
+                                            @csrf
+                                            <div class="card-body">
+                                                <div class="form-group">
+                                                    <x-input-label for="nome" :value="__('Nome')" />
+                                                    <input value="{{ $aparelho->nome }}" id="nome"
+                                                        class="block mt-1 w-full" type="text" name="nome" required
+                                                        autofocus autocomplete="username" />
 
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="descricao">Descrição</label>
-                                            <textarea class="form-control" name="descricao" id="descricao" rows="3" placeholder="Descreva o aparelho">{{ $aparelho->descricao }}</textarea>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="descricao">Descrição</label>
+                                                    <textarea class="form-control" name="descricao" id="descricao" rows="3" placeholder="Descreva o aparelho">{{ $aparelho->descricao }}</textarea>
 
-                                        </div>
+                                                </div>
 
-                                        <div class="form-group">
-                                            <label for="preco_de_aluguer">Preço de aluguer</label>
-                                            <input value="{{ $aparelho->preco_de_aluguer }}" type="number" name="preco_de_aluguer" class="form-control"
-                                                id="precoAluger" placeholder="Preço de aluger">
+                                                <div class="form-group">
+                                                    <label for="preco_de_aluguer">Preço de aluguer</label>
+                                                    <input value="{{ $aparelho->preco_de_aluguer }}" type="number"
+                                                        name="preco_de_aluguer" class="form-control" id="precoAluger"
+                                                        placeholder="Preço de aluger">
 
-                                        </div>
+                                                </div>
 
-                                        <div class="form-group">
-                                            <label for="imageFile">Imagem do aparelho</label>
-                                            <div class="input-group">
-                                                <div class="custom-file">
-                                                    <input type="file" name="imageFile" class="custom-file-input"
-                                                        id="imagefile">
-                                                    <label class="custom-file-label" for="imageFile">Escolha o
-                                                        arquivo</label>
+                                                <div class="form-group">
+                                                    <label for="imageFile">Imagem do aparelho</label>
+                                                    <div class="input-group">
+                                                        <div class="custom-file">
+                                                            <input type="file" name="imageFile"
+                                                                class="custom-file-input" id="imagefile">
+                                                            <label class="custom-file-label" for="imageFile">Escolha o
+                                                                arquivo</label>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                            <div class="modal-footer justify-content-between">
+                                                <a href="{{ route('aparelhos.index') }}" class="btn btn-danger">
+                                                    Cancelar
+                                                </a>
+                                                <button type="submit" class="btn btn-primary">Enviar</button>
+                                            </div>
+                                        </form>
                                     </div>
-                                    <div class="modal-footer justify-content-between">
-                                        <button type="button" class="btn btn-default"
-                                            data-dismiss="modal">Cancelar</button>
-                                        <button type="submit" class="btn btn-primary">Enviar</button>
-                                    </div>
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -18,13 +18,15 @@ class EventoController extends Controller
      */
     public function index(): Response
     {
-        $user = auth()
+        $user = auth()->user();
 
         if (\Gate::allows('admin')) {
+            $eventos = Evento::all();
             return response(view('livewire.admin.admin-show-eventos', [
                 'eventos' => $eventos,
             ]));
         } else {
+            $eventos = Evento::where('user_id', $user->id)->get();
             return response(view('livewire.show-eventos', [
                 'eventos' => $eventos,
             ]));
@@ -89,12 +91,15 @@ class EventoController extends Controller
         // somando mais 1 dia com somar_mais_um_dia_na_datasomar_mais_um_dia_na_data
 
         $evento = $this->get_evento_with_maior_data_evento_e_maior_data_termino();
-        if ($evento) {
-            $data_evento = $this->somar_mais_um_dia_na_data($evento->data_evento);
-            $data_termino = $this->somar_mais_um_dia_na_data($evento->data_termino);
+        $data_evento = $this->somar_mais_um_dia_na_data($evento->data_evento);
+        $data_termino = $this->somar_mais_um_dia_na_data($evento->data_termino);
+        if ($request->data_evento < $evento->data_evento) {
             return redirect()->back()->withErrors(['data_evento' => 'Já existe um evento com a mesma data de inicio e fim. Sugerimos a data de inicio: ' . $data_evento . ' e a data de fim: ' . $data_termino]);
         }
 
+        if ($request->data_termino < $evento->data_termino) {
+            return redirect()->back()->withErrors(['data_evento' => 'Já existe um evento com a mesma data de inicio e fim. Sugerimos a data de inicio: ' . $data_evento . ' e a data de fim: ' . $data_termino]);
+        }
         // verifica se a request nao tem erro algums
 
         Evento::create([
@@ -104,6 +109,7 @@ class EventoController extends Controller
             'localizacao' => $request->localizacao,
             'pacote_id' => $request->pacote_id,
             'estado_evento_id' => EstadoDeAluger::AGUARDANDO,
+            'user_id' => auth()->user()->id,
         ]);
 
         return redirect()->route('evento.index');

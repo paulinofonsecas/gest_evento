@@ -14,9 +14,16 @@ class AparelhoController extends Controller
     public function index()
     {
         $aparelhos = Aparelho::all();
-        return response(view('catalogo', [
-            '$aparelhos' => $aparelhos,
-        ]));
+
+        if (Gate::allows('admin')) {
+            return response(view('admin.admin_catalogo', [
+                'aparelhos' => $aparelhos,
+            ]));
+        } else {
+            return response(view('catalogo', [
+                'aparelhos' => $aparelhos,
+            ]));
+        }
     }
 
     /**

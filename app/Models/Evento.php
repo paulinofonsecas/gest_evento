@@ -16,6 +16,7 @@ class Evento extends Model
         'localizacao',
         'pacote_id',
         'estado_evento_id',
+        'user_id',
     ];
 
     public function estadoEvento()

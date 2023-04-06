@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Modals & Alerts</title>
+    <title>Gestão de eventos</title>
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -24,11 +24,13 @@
 </head>
 
 <body class="hold-transition">
-    <div class="min-h-screen bg-gray-100">
+    <div class="wrapper">
         @include('layouts.navigation')
-        <main>
-            {{ $slot }}
-        </main>
+        <div class="content-wrapper min-h-screen bg-gray-100">
+            <main>
+                {{ $slot }}
+            </main>
+        </div>
     </div>
     <!-- jQuery -->
     <script src={{ asset('theme/plugins/jquery/jquery.min.js') }}></script>

@@ -11,8 +11,9 @@
                                     <div class="card-header">
                                         <h3 class="card-title">Lista de eventos</h3>
                                         <div class="card-tools">
-                                            <a href="{{ route('evento.create') }}" class="btn btn-success">Agendar
-                                                evento</a>
+                                            <a href="{{ route('evento.create') }}" class="btn btn-success">
+                                                <i class="mr-2 fa-regular fa-plus"></i>
+                                                Agendar evento</a>
                                         </div>
                                     </div>
                                     <!-- /.card-header -->
@@ -40,7 +41,15 @@
                                                         <td>{{ $evento->data_termino }}</td>
                                                         <td>{{ number_format($evento->pacote->preco_de_aluguer, 2, ',', '.') }}
                                                             Kz</td>
-                                                        <td>{{ $evento->estadoEvento->descricao }}</td>
+                                                        <td>
+                                                            @if ($evento->estadoEvento->descricao == 'Aguardando')
+                                                                <span class="badge badge-warning">Shipped</span>
+                                                            @elseif ($evento->estadoEvento->descricao == 'Aceite')
+                                                                <span class="badge badge-primary">Shipped</span>
+                                                            @elseif ($evento->estadoEvento->descricao == 'Finalizado')
+                                                                <span class="badge badge-success">Shipped</span>
+                                                            @endif
+                                                        </td>
                                                         <td>{{ $evento->pacote->nome }}</td>
                                                     </tr>
                                                 @endforeach

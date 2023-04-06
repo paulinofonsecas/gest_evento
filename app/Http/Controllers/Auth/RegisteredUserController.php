@@ -35,17 +35,19 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
             'bi' => ['required', 'string', 'max:14'],
-            'usertype' => ['required', 'integer', 'max:14'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
+
+       
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'bi' => $request->bi,
-            'type_id' => $request->usertype,
+            // cliente ,
+            'type_id' => UserType::NORMAL,
             'password' => Hash::make($request->password),
         ]);
 
@@ -54,7 +56,7 @@ class RegisteredUserController extends Controller
         Auth::login($user);
         $user = Auth::user();
 
-        if ($user->type->descricao == 'admin'){
+        if ($user->type_id == UserType::ADMIN) {
             return redirect()->intended(RouteServiceProvider::HOME_ADMIN);
         } else {
             return redirect()->intended(RouteServiceProvider::HOME);

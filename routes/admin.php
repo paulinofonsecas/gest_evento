@@ -13,14 +13,14 @@ Route::get('/admin/dashboard', function () {
     ]);
 })->middleware(['auth', 'verified', 'can:admin'])->name('admin_dashboard');
 
-Route::resource('/admin/aparelho', AparelhoController::class)->middleware(['auth', 'verified', 'can:admin']);
+Route::resource('/admin/aparelhos', AparelhoController::class)->middleware(['auth', 'verified', 'can:admin']);
 
 Route::resource('/admin/eventos', EventoController::class)->middleware(['auth', 'verified', 'can:admin']);
 
-Route::get('/admin/aparelho/edit/{id}', [AparelhoController::class, 'edit'])->middleware(['auth', 'verified', 'can:admin'])->name('admin_edit_aparelho');
+Route::get('/admin/aparelhos/edit/{id}', [AparelhoController::class, 'edit'])->middleware(['auth', 'verified', 'can:admin'])->name('admin_edit_aparelho');
 
-Route::post('/admin/aparelho/update/{id}', [AparelhoController::class, 'update'])->middleware(['auth', 'verified', 'can:admin'])->name('admin_update_aparelho');
+Route::post('/admin/aparelhos/update/{id}', [AparelhoController::class, 'update'])->middleware(['auth', 'verified', 'can:admin'])->name('admin_update_aparelho');
 
-Route::get('/admin/aparelho/delete/{id}', [AparelhoController::class, 'destroy'])->middleware(['auth', 'verified', 'can:admin'])->name('admin_delete_aparelho');
+Route::get('/admin/aparelhos/delete/{id}', [AparelhoController::class, 'destroy'])->middleware(['auth', 'verified', 'can:admin'])->name('admin_delete_aparelho');
 
 Route::get('/admin/catalogo', [AdminCatalogoController::class, 'index'])->middleware(['auth', 'verified', 'can:admin'])->name('admin_catalogo');
