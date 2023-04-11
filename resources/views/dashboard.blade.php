@@ -1,3 +1,3 @@
 <x-app-layout>
-    @livewire('admin.my-dashboard')
+    @livewire('my-dashboard', ['eventos' => $eventos])
 </x-app-layout>

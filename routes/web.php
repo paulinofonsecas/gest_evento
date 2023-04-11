@@ -5,6 +5,7 @@ use App\Http\Controllers\EventoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AparelhoController;
 use App\Http\Controllers\AdminCatalogoController;
+use App\Models\Evento;
 use App\Models\Usertype;
 use Illuminate\Support\Facades\Route;
 
@@ -28,7 +29,9 @@ Route::get('/dashboard', function () {
     if ($user->type_id == Usertype::ADMIN) {
         return redirect()->route('admin_catalogo');
     } else {
-        return redirect()->route('evento.index');
+        return view('livewire.my-dashboard', [
+            'eventos' => Evento::all(),
+        ]);
     }
 })->middleware(['auth', 'verified'])->name('dashboard');
 

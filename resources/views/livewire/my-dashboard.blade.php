@@ -1,55 +1,51 @@
-<div class="py-7">
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-            <div class="p-6 text-gray-900">
-                <div class="row mx-auto">
-                    <!-- small box -->
-                    <div class="col-lg-4 col-4">
-                        <div class="small-box bg-success">
-                            <div class="inner">
-                                <h3>53</h3>
+<x-cliente-layout>
 
-                                <p>Solicitações feitas</p>
-                            </div>
-                            <div class="icon">
-                                <i class="ion ion-stats-bars"></i>
-                            </div>
-                            <a href="#" class="small-box-footer">Mais informações <i
-                                    class="fas fa-arrow-circle-right"></i></a>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-4">
-                        <!-- small box -->
-                        <div class="small-box bg-warning">
-                            <div class="inner">
-                                <h3>44</h3>
+    <div class="py-7">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                    <div class="mx-auto">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Agenda de eventos empresa</h3>
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <div class="card-body table-responsive p-0" style="height: 300px;">
+                                        <table class="table table-head-fixed text-nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Data do evento</th>
+                                                    <th>Data de termino</th>
+                                                    <th>Localização do evento</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($eventos as $evento)
+                                                    <tr>
+                                                        <td>{{ $evento->id }}</td>
+                                                        <td><a
+                                                                href="{{ route('eventos.show', [$evento->id]) }}">{{ $evento->data_evento }}</a>
+                                                        </td>
+                                                        <td>{{ $evento->data_termino }}</td>
+                                                        <td>{{ $evento->localizacao }}</td>
+                                                    </tr>
+                                                @endforeach
 
-                                <p>Solicitações por aprovar</p>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
                             </div>
-                            <div class="icon">
-                                <i class="ion ion-person-add"></i>
-                            </div>
-                            <a href="#" class="small-box-footer">Mais informações <i
-                                    class="fas fa-arrow-circle-right"></i></a>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-4">
-                        <!-- small box -->
-                        <div class="small-box bg-danger">
-                            <div class="inner">
-                                <h3>65</h3>
-
-                                <p>Solicitações negadas</p>
-                            </div>
-                            <div class="icon">
-                                <i class="ion ion-pie-graph"></i>
-                            </div>
-                            <a href="#" class="small-box-footer">Mais informações <i
-                                    class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+
+</x-cliente-layout>

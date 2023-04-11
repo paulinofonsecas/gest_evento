@@ -36,17 +36,25 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
-            'bi' => ['required', 'string', 'max:14'],
+            'bi' => ['required', 'string'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-       
+        // se existir a repetição do BI retornar uma mensagem de erro
+        if (User::where('bi', $request->bi)->exists()) {
+            return redirect()->back()->withErrors(['bi' => 'O BI que está tentando inserir já existe']);
+        }
+
+        // se existir a repetição do email retornar uma mensagem de erro
+        if (User::where('email', $request->email)->exists()) {
+            return redirect()->back()->withErrors(['email' => 'O email que está tentando inserir já existe']);
+        }
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'bi' => $request->bi,
-            // cliente ,
+
             'type_id' => UserType::NORMAL,
             'password' => Hash::make($request->password),
         ]);

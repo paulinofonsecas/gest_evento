@@ -48,4 +48,16 @@ class User extends Authenticatable
     {
         return $this->hasOne(Usertype::class, 'id', 'type_id');
     }
+
+    // relaction with eventos
+    public function eventos()
+    {
+        return $this->hasMany(Evento::class, 'user_id', 'id');
+    }
+
+    // isAdmin
+    public function isAdmin()
+    {
+        return $this->type_id == Usertype::ADMIN;
+    }
 }
