@@ -27,7 +27,7 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     $user = Auth()->user();
     if ($user->type_id == Usertype::ADMIN) {
-        return redirect()->route('admin_catalogo');
+        return redirect()->route('admin_dashboard');
     } else {
         return view('livewire.my-dashboard', [
             'eventos' => Evento::all(),

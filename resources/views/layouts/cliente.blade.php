@@ -21,6 +21,7 @@
     <link rel="stylesheet" href={{ asset('theme/plugins/toastr/toastr.min.css') }}>
     <!-- Theme style -->
     <link rel="stylesheet" href={{ asset('theme/dist/css/adminlte.min.css') }}>
+
 </head>
 
 <body class="hold-transition">

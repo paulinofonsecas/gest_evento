@@ -23,6 +23,7 @@
                                                 {{ Str::limit($aparelho->descricao, 25, '...') }}</div>
                                         </div>
                                     </div>
+                                    
                                 @endforeach
                             </div>
                         </div>
