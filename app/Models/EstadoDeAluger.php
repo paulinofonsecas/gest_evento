@@ -11,7 +11,7 @@ class EstadoDeAluger extends Model
 
     public const AGUARDANDO = 1;
     public const ACEITE = 2;
-    public const RECEBIDO = 3;
+    public const FINALIZADO = 3;
     public const REJEITADO = 4;
 
     protected $fillable =[

@@ -2,18 +2,12 @@
 
 use App\Http\Controllers\AdminCatalogoController;
 use App\Http\Controllers\AparelhoController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventoController;
 use App\Models\Evento;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/admin/dashboard', function () {
-
-    $eventos = Evento::all();
-    return view('livewire.admin.admin-show-eventos', [
-        'eventos' => $eventos,
-    ]);
-
-})->middleware(['auth', 'verified', 'can:admin'])->name('admin_dashboard');
+Route::get('/admin/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified', 'can:admin'])->name('admin_dashboard');
 
 Route::resource('/admin/aparelhos', AparelhoController::class)->middleware(['auth', 'verified', 'can:admin']);
 
