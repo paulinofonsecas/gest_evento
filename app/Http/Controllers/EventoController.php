@@ -64,11 +64,11 @@ class EventoController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'data_evento' => ['date', 'required'],
-            'data_termino' => ['date', 'required'],
-            'descricao' => ['string'],
-            'localizacao' => ['string', 'required'],
-            'pacote_id' => ['integer', 'required'],
+            'data_evento'  => ['required', 'date'],
+            'data_termino' => ['required', 'date'],
+            'descricao'    => ['string'],
+            'localizacao'  => ['required', 'string'],
+            'pacote_id'    => ['required', 'integer'],
         ]);
 
         // validar os campos de data
