@@ -56,68 +56,70 @@
             <div class="py-7">
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <div class="p-6 text-gray-900">
-                            <div class="card card-primary card-outline">
-                                <div class="card-header">
+                        <form method="POST" action="{{ route('aparelhos.store') }}" <div class="card-header">
+                            @csrf
+                            <div class="p-6 text-gray-900">
+                                <div class="card card-primary card-outline">
                                     <a href="{{ route('aparelhos.index') }}" class="btn btn-primary">
                                         Voltar
                                     </a>
+                                    @method('put')
                                     <a href="{{ route('aparelhos.edit', [$aparelho->id]) }}" class="btn btn-warning">
                                         Editar
                                     </a>
+                                    @method('delete')
                                     <a href="{{ route('aparelhos.destroy', [$aparelho->id]) }}" class="btn btn-danger">
                                         Remover
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <form method="POST" action="{{ route('aparelhos.store') }}"
-                                        enctype="multipart/form-data">
-                                        @csrf
-                                        <div class="card-body">
-                                            <div class="form-group">
-                                                <x-input-label for="nome" :value="__('Nome')" />
-                                                <x-text-input disabled id="nome" class="block mt-1 w-full" type="text"
-                                                    name="nome" value="{{ $aparelho->nome }}" required autofocus
-                                                    autocomplete="username" />
+                                    enctype="multipart/form-data">
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <x-input-label for="nome" :value="__('Nome')" />
+                                            <x-text-input disabled id="nome" class="block mt-1 w-full"
+                                                type="text" name="nome" value="{{ $aparelho->nome }}" required
+                                                autofocus autocomplete="username" />
 
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="descricao">Descrição</label>
-                                                <textarea disabled class="form-control" name="descricao" id="descricao" rows="3" placeholder="Descreva o aparelho">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="descricao">Descrição</label>
+                                            <textarea disabled class="form-control" name="descricao" id="descricao" rows="3"
+                                                placeholder="Descreva o aparelho">
                                                     {{ $aparelho->descricao }}
                                                 </textarea>
 
-                                            </div>
+                                        </div>
 
-                                            <div class="form-group">
-                                                <label for="precoAluger">Preço de aluguer</label>
-                                                <input disabled type="number" name="precoAluger"
-                                                    value="{{ $aparelho->preco_de_aluguer }}" class="form-control"
-                                                    id="precoAluger" placeholder="Preço de aluger">
-
-                                            </div>
-
-                                            @if ($aparelho->image_url)
-                                                <img class="img-fluid pad px-12" style=" max-width: 70%;"
-                                                    src="{{ url('/storage/aparelhos/' . $aparelho->image_url) }}"
-                                                    alt="Photo">
-                                            @endif
+                                        <div class="form-group">
+                                            <label for="precoAluger">Preço de aluguer</label>
+                                            <input disabled type="number" name="precoAluger"
+                                                value="{{ $aparelho->preco_de_aluguer }}" class="form-control"
+                                                id="precoAluger" placeholder="Preço de aluger">
 
                                         </div>
-                                        <div class="modal-footer justify-content-between">
-                                            <a href="{{ route('aparelhos.index') }}" class="btn btn-danger">
-                                                Cancelar
-                                            </a>
-                                            <button type="submit" class="btn btn-primary">Enviar</button>
-                                        </div>
-                                    </form>
+
+                                        @if ($aparelho->image_url)
+                                            <img class="img-fluid pad px-12" style=" max-width: 70%;"
+                                                src="{{ url('/storage/aparelhos/' . $aparelho->image_url) }}"
+                                                alt="Photo">
+                                        @endif
+
+                                    </div>
+                                    <div class="modal-footer justify-content-between">
+                                        <a href="{{ route('aparelhos.index') }}" class="btn btn-danger">
+                                            Cancelar
+                                        </a>
+                                        <button type="submit" class="btn btn-primary">Enviar</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
     <!-- jQuery -->
     <script src={{ asset('theme/plugins/jquery/jquery.min.js') }}></script>

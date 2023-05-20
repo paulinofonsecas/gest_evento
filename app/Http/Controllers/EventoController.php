@@ -64,11 +64,11 @@ class EventoController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'data_evento'  => ['required', 'date'],
+            'data_evento' => ['required', 'date'],
             'data_termino' => ['required', 'date'],
-            'descricao'    => ['string'],
-            'localizacao'  => ['required', 'string'],
-            'pacote_id'    => ['required', 'integer'],
+            'descricao' => ['string'],
+            'localizacao' => ['required', 'string'],
+            'pacote_id' => ['required', 'integer'],
         ]);
 
         // validar os campos de data
@@ -172,10 +172,10 @@ class EventoController extends Controller
     {
         if (\Gate::allows('admin')) {
             $this->admin_update_info($request, $evento);
-            return redirect()->route('eventos.show', [$evento->id])->with('success', 'Estado do evento atualizado com sucesso');
+            return redirect()->route('eventos.index', [$evento->id])->with('success', 'Estado do evento atualizado com sucesso');
         } else {
             $this->user_update_info($request, $evento);
-            return redirect()->route('eventos.show', [$evento->id])->with('success', 'O estado do evento é o mesmo');
+            return redirect()->route('evento.index', [$evento->id])->with('success', 'O estado do evento é o mesmo');
         }
     }
 
@@ -241,6 +241,10 @@ class EventoController extends Controller
     {
         $evento->delete();
 
-        return redirect()->route('evento.index')->with('success', 'Evento eliminado com sucesso');
+        if (\Gate::allows('admin')) {
+            return redirect()->route('eventos.index')->with('success', 'Evento eliminado com sucesso');
+        } else {
+            return redirect()->route('evento.index')->with('success', 'Evento eliminado com sucesso');
+        }
     }
 }

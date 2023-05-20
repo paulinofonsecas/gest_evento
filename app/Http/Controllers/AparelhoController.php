@@ -132,7 +132,7 @@ class AparelhoController extends Controller
             $aparelho->disponibilidade_id = 1;
 
             if ($request->hasFile('imageFile')) {
-                $file = $request->file('imageFiles');
+                $file = $request->file('imageFile');
                 $filenameWithExt = $file->getClientOriginalName();
                 $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
                 $extension = $file->getClientOriginalExtension();
@@ -157,6 +157,10 @@ class AparelhoController extends Controller
     {
         Aparelho::destroy($id);
 
-        return redirect()->route('admin_catalogo');
+        if (Gate::allows('admin')) {
+            return redirect()->route('admin_catalogo');
+        } else {
+            return redirect()->route('catalogo');
+        }
     }
 }

@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class EstadoDeEvento extends Model
 {
     use HasFactory;
+
+    const AGUARDANDO = 1;
 }

@@ -38,13 +38,18 @@ class DashboardController extends Controller
         $eventosConfirmadosNoAno = implode(',', $eventosConfirmadosNoAno);
         $eventosFinalizadosNoAno = implode(',', $eventosFinalizadosNoAno);
 
+
         return view('admin.dashboard', [
             'title' => 'Dashboard',
             'active' => 'dashboard',
-            'eventos' => Evento::orderBy('data_evento', 'desc')->limit(10)->get(),
+            'eventos' => Evento::orderBy('data_evento', 'desc',)->where('estado_evento_id', EstadoDeAluger::AGUARDANDO)->paginate(5),
             'numeroDeEventosMarcadosParaHoje' => Evento::whereDate('data_evento', date('Y-m-d'))->count(),
             'totalDeEventos' => Evento::count(),
-            // contar usuarios nao admin
+
+            'totalAgendados' => Evento::where('estado_evento_id', EstadoDeAluger::AGUARDANDO)->count(),
+            'totalAceites' => Evento::where('estado_evento_id', EstadoDeAluger::ACEITE)->count(),
+            'totalFinalizados' => Evento::where('estado_evento_id', EstadoDeAluger::FINALIZADO)->count(),
+
             'totalDeUsuarios' => User::where('type_id', '<>', Usertype::ADMIN)->count(),
             'eventosComEstadoAgendadoDoAno' => $eventosAguardandoNoAno,
             'eventosComEstadoAceitesDoAno' => $eventosConfirmadosNoAno,

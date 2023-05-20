@@ -68,7 +68,7 @@
                                         <h6>Eventos</h6>
                                         <p class="text-sm mb-0">
                                             <i class="fa fa-check text-info" aria-hidden="true"></i>
-                                            <span class="font-weight-bold ms-1">30 finalizados</span> este mês
+                                            <span class="font-weight-bold ms-1">Ultimos 5 pedidos</span>
                                         </p>
                                     </div>
                                     <div class="col-lg-6 col-5 my-auto text-end">
@@ -127,7 +127,13 @@
                                                     </td>
                                                     <td>
                                                         <a href={{ route('eventos.show', [$evento->id]) }}>
-                                                            {{ $evento->descricao }}
+                                                            <!-- if ) -->
+                                                            @if (strlen($evento->descricao) > 50)
+                                                                {{ substr($evento->descricao, 0, 50) }}...
+                                                            @else
+                                                                {{ $evento->descricao }}
+                                                            @endif
+                                                        </a>
                                                     </td>
                                                     <td class="align-middle text-center text-sm">
                                                         <a href={{ route('eventos.show', [$evento->id]) }}>
@@ -165,7 +171,7 @@
                                 <p class="text-sm ">Eventos marcados a espera de serem revistos</p>
                                 <hr class="dark horizontal">
                                 <div class="d-flex ">
-                                    <p class="mb-0 text-sm"> Data do ultimo evento agendado 13/04/2023 </p>
+                                    <p class="mb-0 text-sm"> Total {{ $totalAgendados }} </p>
                                 </div>
                             </div>
                         </div>
@@ -185,7 +191,7 @@
                                 <p class="text-sm ">Eventos marcados e confirmados</p>
                                 <hr class="dark horizontal">
                                 <div class="d-flex ">
-                                    <p class="mb-0 text-sm"> Data do ultimo evento confirmado 13/04/2023 </p>
+                                    <p class="mb-0 text-sm"> Total {{ $totalAceites }} </p>
                                 </div>
                             </div>
                         </div>
@@ -206,7 +212,8 @@
                                 <p class="text-sm ">Eventos finalizados</p>
                                 <hr class="dark horizontal">
                                 <div class="d-flex ">
-                                    <p class="mb-0 text-sm"> Data do ultimo evento finalizado 10/04/2023 </p>
+                                    <p class="mb-0 text-sm"> Total {{ $totalFinalizados }} </p>
+
                                 </div>
                             </div>
                         </div>
@@ -221,6 +228,7 @@
                 <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 435px;"></div>
             </div>
         </main>
+        @include('layouts.admin.footer')
         <script>
             var ctx = document.getElementById("chart-bars").getContext("2d");
 
@@ -229,7 +237,7 @@
                 data: {
                     labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                     datasets: [{
-                        label: "Mobile apps",
+                        label: "Aguardando",
                         tension: 0,
                         borderWidth: 0,
                         pointRadius: 5,
@@ -313,7 +321,7 @@
                 data: {
                     labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                     datasets: [{
-                        label: "Mobile apps",
+                        label: "Aceites",
                         tension: 0,
                         borderWidth: 0,
                         pointRadius: 5,
@@ -396,7 +404,7 @@
                 data: {
                     labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                     datasets: [{
-                        label: "Mobile apps",
+                        label: "Finalizados",
                         tension: 0,
                         borderWidth: 0,
                         pointRadius: 5,
@@ -471,4 +479,3 @@
                 },
             });
         </script>
-        @include('layouts.admin.footer')

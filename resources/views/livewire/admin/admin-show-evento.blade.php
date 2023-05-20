@@ -1,194 +1,114 @@
-</html>
-<!DOCTYPE html>
-<html lang="en">
+@include('layouts.admin.header', ['pageTitle' => 'Eventos'])
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Agendar evento</title>
-
-    <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @livewireStyles
-
-    <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href={{ asset('theme/plugins/fontawesome-free/css/all.min.css') }}>
-    <!-- SweetAlert2 -->
-    <link rel="stylesheet" href={{ asset('theme/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}>
-    <!-- Toastr -->
-    <link rel="stylesheet" href={{ asset('theme/plugins/toastr/toastr.min.css') }}>
-    <!-- Theme style -->
-    <link rel="stylesheet" href={{ asset('theme/dist/css/adminlte.min.css') }}>
-    <!-- Select2 -->
-    <link rel="stylesheet" href={{ asset('theme/plugins/select2/css/select2.min.css') }}>
-    <link rel="stylesheet" href={{ asset('theme/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}>
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href={{ asset('theme/plugins/fontawesome-free/css/all.min.css') }}>
-    <!-- daterange picker -->
-    <link rel="stylesheet" href={{ asset('theme/plugins/daterangepicker/daterangepicker.css') }}>
-    <!-- iCheck for checkboxes and radio inputs -->
-    <link rel="stylesheet" href={{ asset('theme/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}>
-    <!-- Bootstrap Color Picker -->
-    <link rel="stylesheet" href={{ asset('theme/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css') }}>
-    <!-- Tempusdominus Bootstrap 4 -->
-    <link rel="stylesheet"
-        href={{ asset('theme/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}>
-    <!-- Select2 -->
-    <link rel="stylesheet" href={{ asset('theme/plugins/select2/css/select2.min.css') }}>
-    <link rel="stylesheet" href={{ asset('theme/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}>
-    <!-- Bootstrap4 Duallistbox -->
-    <link rel="stylesheet" href={{ asset('theme/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css') }}>
-    <!-- BS Stepper -->
-    <link rel="stylesheet" href={{ asset('theme/plugins/bs-stepper/css/bs-stepper.min.css') }}>
-    <!-- dropzonejs -->
-    <link rel="stylesheet" href={{ asset('theme/plugins/dropzone/min/dropzone.min.css') }}>
-    <!-- Theme style -->
-    <link rel="stylesheet" href={{ asset('theme/dist/css/adminlte.min.css') }}>
-</head>
-
-<body class="hold-transition">
-    <div class="min-h-screen bg-gray-100">
-        <div class="wrapper">
-            @include('layouts.admin_navigation')
-            <div class="content-wrapper min-h-screen bg-gray-100">
-                <div class="py-7">
-                    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                            <div class="p-6 text-gray-900">
-                                <div class="card card-primary card-outline">
-                                    <div class="card-header">
-                                        <div class="flex-row">
-                                            <h2 class=" card-title">Evento agendado</h2>
-                                            <a href="{{ route('eventos.edit', $evento->id) }}"
-                                                class="float-right btn mr-5 btn-success">Processar</a>
-                                        </div>
-                                        <div class="card-body mt-3">
-                                            <form method="POST" action="{{ route('evento.store') }}"
-                                                enctype="multipart/form-data">
-                                                @csrf
-                                                <div class="card-body">
-                                                    <div class="form-group">
-                                                        <label for="descricao">Data do evento</label>
-                                                        <x-text-input disabled id="Data do evento"
-                                                            class="block mt-1 w-full" type="date" name="data_evento"
-                                                            data-="{{ $evento->data_evento }}" required autofocus
-                                                            autocomplete="username"
-                                                            value="{{ $evento->data_evento }}" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="descricao">Data de término</label>
-                                                        <x-text-input disabled id="Data de termino"
-                                                            class="block mt-1 w-full" type="date" name="data_termino"
-                                                            required autofocus autocomplete="username"
-                                                            value="{{ $evento->data_termino }}" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="descricao">Descrição</label>
-                                                        <textarea disabled class="form-control" name="descricao" id="descricao" rows="3"
-                                                            placeholder="Descreva o seu evento">{{ $evento->descricao }}</textarea>
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label for="precoAluger">Localização</label>
-                                                        <input disabled value="{{ $evento->localizacao }}"
-                                                            type="text" name="localizacao" class="form-control"
-                                                            id="precoAluger" required
-                                                            placeholder="Localização do evento">
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label for="pacote">Estado</label>
-                                                        <select disabled
-                                                            class="block font-medium text-sm text-gray-700border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
-                                                            required name="estado_id" id="pacote"
-                                                            style="width: 100%">
-                                                            @foreach ($estados as $estado)
-                                                                {{ $selected = $estado->id == $evento->estado_evento_id ? 'selected' : '' }}
-                                                                <option {{ $selected }}
-                                                                    value="{{ $estado->id }}">
-                                                                    {{ Str::upper($estado->descricao) }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label for="pacote">Pacote</label>
-                                                        <select disabled
-                                                            class="block font-medium text-sm text-gray-700border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
-                                                            required name="pacote_id" id="pacote"
-                                                            style="width: 100%">
-                                                            @foreach ($pacotes as $pacote)
-                                                                {{ $selected = $pacote->id == $evento->pacote_id ? 'selected' : '' }}
-                                                                <option {{ $selected }}
-                                                                    value="{{ $pacote->id }}">
-                                                                    {{ Str::upper($pacote->nome) }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer justify-content-between">
-                                                    <a href="{{ route('eventos.index') }}" class="btn btn-default"
-                                                        data-dismiss="modal">Cancelar</a>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+<main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+    <div class="container-fluid py-3">
+        <div class="row pr-4 mb-4">
+            <div class="card card-primary card-outline">
+                @if ($errors->any())
+                    <div class="card-header">
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
                         </div>
                     </div>
+                @endif
+                <div class="card-body container">
+                    <p class="h2 text-center mb-3">Informações do evento</p>
+
+                    <div class="row justify-content-center">
+                        <div class="col"></div>
+                        <div class="row col-lg-8 justify-content-center">
+                            <div class="input-group input-group-static mb-4">
+                                <label for="pacote">Estado da solicitação</label>
+                                <select class="form-control primary" id="exampleFormControlSelect1" disabled
+                                    name="estado_evento_id" id="estado_evento_id" style="width: 100%">
+                                    @foreach ($estados as $estado)
+                                        {{ $selected = $estado->id == $evento->estado_evento_id ? 'selected' : '' }}
+                                        <option {{ $selected }} value="{{ $estado->id }}">
+                                            {{ Str::upper($estado->descricao) }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="input-group input-group-static mb-4">
+                                <label for="descricao">Data do evento</label>
+                                <input disabled id="Data do evento" class="form-control" type="date"
+                                    name="data_evento" required autofocus value="{{ $evento->data_termino }}" />
+                            </div>
+
+                            <div class="input-group input-group-static mb-4">
+                                <label for="descricao">Data de término</label>
+                                <input disabled id="Data do evento" class="form-control" type="date"
+                                    name="data_termino" required autofocus value="{{ $evento->data_termino }}" />
+                            </div>
+
+                            <div class="input-group input-group-static mb-4">
+                                <label for="descricao">Descrição</label>
+                                <textarea disabled class="form-control" name="descricao" id="descricao" rows="3"
+                                    placeholder="Descreva o seu evento">{{ $evento->descricao }}</textarea>
+                            </div>
+
+                            <div class="input-group input-group-static mb-4">
+                                <label for="precoAluger">Localização</label>
+                                <input disabled value="{{ $evento->localizacao }}" type="text" name="localizacao"
+                                    class="form-control" id="precoAluger" required placeholder="Localização do evento">
+                            </div>
+
+                            <div class="input-group input-group-static mb-4">
+                                <label for="pacote">Pacote</label>
+                                <select disabled class="form-control" required name="pacote_id" id="pacote"
+                                    style="width: 100%">
+                                    @foreach ($pacotes as $pacote)
+                                        {{ $selected = $pacote->id == $evento->pacote_id ? 'selected' : '' }}
+                                        <option {{ $selected }} value="{{ $pacote->id }}">
+                                            {{ Str::upper($pacote->nome) }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="row justify-content-center">
+                                <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                    class=" col-4 btn btn-danger mx-2">Eliminar
+                                    pedido</a>
+                                @include('components.my_modal', [
+                                    'titleModal' => 'exampleModal',
+                                    'title' => 'Eliminar pedido',
+                                    'content' => 'Tem certeza que deseja eliminar o pedido?',
+                                    'route' => route('eventos.destroy', [$evento->id]),
+                                    'method' => 'DELETE',
+                                    'action' => 'Eliminar pedido',
+                                    'type' => 'submit',
+                                    'icon' => 'fa fa-trash',
+                                    'other' => '',
+                                    'close' => 'Cancelar',
+                                ])
+                                <a href="{{ route('eventos.edit', [$evento->id]) }}"
+                                    class=" col-4 btn btn-warning mx-2">Processar pedido</a>
+                            </div>
+                        </div>
+                        <div class="col"></div>
+                    </div>
                 </div>
+                {{-- <div class="modal-footer justify-content-between">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-primary">Enviar</button>
+                            </div> --}}
+
             </div>
         </div>
     </div>
-    <!-- jQuery -->
-    <script src={{ asset('theme/plugins/jquery/jquery.min.js') }}></script>
-    <!-- Select2 -->
-    <script src={{ asset('theme/plugins/select2/js/select2.full.min.js') }}></script>
-    <!-- Bootstrap 4 -->
-    <script src={{ asset('theme/plugins/bootstrap/js/bootstrap.bundle.min.js') }}></script>
-    <!-- SweetAlert2 -->
-    <script src={{ asset('theme/plugins/sweetalert2/sweetalert2.min.js') }}></script>
-    <!-- Toastr -->
-    <script src={{ asset('theme/plugins/toastr/toastr.min.js') }}></script>
-    <script src={{ asset('theme/plugins/filterizr/jquery.filterizr.min.js') }}></script>
-    <script src={{ asset('theme/plugins/ekko-lightbox/ekko-lightbox.min.js') }}></script>
-    <!-- AdminLTE App -->
-    <script src={{ asset('theme/dist/js/adminlte.js') }}></script>
-    <!-- bs-custom-file-input -->
-    <script src={{ asset('theme/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}></script>
-    <!-- InputMask -->
-    <script src={{ asset('theme/plugins/moment/moment.min.js') }}></script>
-    <script src={{ asset('theme/plugins/inputmask/jquery.inputmask.min.js') }}></script>
-    <!-- Bootstrap4 Duallistbox -->
-    <script src={{ asset('theme/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js') }}></script>
-    <!-- Bootstrap Switch -->
-    <script src={{ asset('theme/plugins/bootstrap-switch/js/bootstrap-switch.min.js') }}></script>
-    <!-- BS-Stepper -->
-    <script src={{ asset('theme/plugins/bs-stepper/js/bs-stepper.min.js') }}></script>
-    <script>
-        $(function() {
-            bsCustomFileInput.init();
+    </div>
 
-            //Initialize Select2 Elements
-            $('.select2').select2()
+    <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
+        <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div>
+    </div>
+    <div class="ps__rail-y" style="top: 0px; height: 746px; right: 0px;">
+        <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 435px;"></div>
+    </div>
+</main>
 
-            //Initialize Select2 Elements
-            $('.select2bs4').select2({
-                theme: 'bootstrap4'
-            })
-
-            //Bootstrap Duallistbox
-            $('.duallistbox').bootstrapDualListbox()
-        });
-    </script>
-</body>
-
-
-</html>
+@include('layouts.admin.footer')

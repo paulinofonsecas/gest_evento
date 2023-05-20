@@ -27,83 +27,86 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        Usertype::insert([
-            'descricao' => 'admin',
-        ]);
-        Usertype::insert([
-            'descricao' => 'cliente',
-        ]);
-        Usertype::insert([
-            'descricao' => 'convidado',
-        ]);
+        // Usertype::insert([
+        //     'descricao' => 'admin',
+        // ]);
+        // Usertype::insert([
+        //     'descricao' => 'cliente',
+        // ]);
+        // Usertype::insert([
+        //     'descricao' => 'convidado',
+        // ]);
 
-        Categoria::insert([
-            'descricao' => 'Música',
-        ]);
-        Categoria::insert([
-            'descricao' => 'Luzes',
-        ]);
-        Categoria::insert([
-            'descricao' => 'decoração',
-        ]);
+        // Categoria::insert([
+        //     'descricao' => 'Música',
+        // ]);
+        // Categoria::insert([
+        //     'descricao' => 'Luzes',
+        // ]);
+        // Categoria::insert([
+        //     'descricao' => 'decoração',
+        // ]);
 
-        Disponibilidade::create(
-            ['descricao' => 'disponivel'],
-        );
-        Disponibilidade::create(
-            ['descricao' => 'ocupado'],
-        );
+        // Disponibilidade::create(
+        //     ['descricao' => 'disponivel'],
+        // );
+        // Disponibilidade::create(
+        //     ['descricao' => 'ocupado'],
+        // );
 
-        Aparelho::create([
-            'nome' => 'Coluna grande',
-            'descricao' => 'teste',
-            'preco_de_aluguer' => '25000',
-            'categoria_id' => 1,
-            'disponibilidade_id' => 1,
-        ]);
+        // Aparelho::create([
+        //     'nome' => 'Coluna grande',
+        //     'descricao' => 'teste',
+        //     'preco_de_aluguer' => '25000',
+        //     'categoria_id' => 1,
+        //     'disponibilidade_id' => 1,
+        // ]);
 
-        Aparelho::create([
-            'nome' => 'Coluna grande',
-            'descricao' => 'teste',
-            'preco_de_aluguer' => '25000',
-            'categoria_id' => 1,
-            'disponibilidade_id' => 1,
-        ]);
+        // Aparelho::create([
+        //     'nome' => 'Coluna grande',
+        //     'descricao' => 'teste',
+        //     'preco_de_aluguer' => '25000',
+        //     'categoria_id' => 1,
+        //     'disponibilidade_id' => 1,
+        // ]);
 
-        Aparelho::create([
-            'nome' => 'Coluna grande',
-            'descricao' => 'teste',
-            'preco_de_aluguer' => '25000',
-            'categoria_id' => 1,
-            'disponibilidade_id' => 1,
-        ]);
+        // Aparelho::create([
+        //     'nome' => 'Coluna grande',
+        //     'descricao' => 'teste',
+        //     'preco_de_aluguer' => '25000',
+        //     'categoria_id' => 1,
+        //     'disponibilidade_id' => 1,
+        // ]);
 
-        EstadoDeAluger::create([
-            'descricao' => 'Aguardando',
-        ]);
-        EstadoDeAluger::create([
-            'descricao' => 'Aceite',
-        ]);
-        EstadoDeAluger::create([
-            'descricao' => 'Finalizado',
-        ]);
+        // EstadoDeAluger::create([
+        //     'descricao' => 'Aguardando',
+        // ]);
+        // EstadoDeAluger::create([
+        //     'descricao' => 'Aceite',
+        // ]);
+        // EstadoDeAluger::create([
+        //     'descricao' => 'Finalizado',
+        // ]);
 
-        $aluger = Aluger::create([
-            'my_user_id' => 1,
-            'data_aluger' => date('Y/m/d'),
-            'data_devolucao' => date('Y/m/d'),
-            'estado_de_aluger_id' => EstadoDeAluger::AGUARDANDO,
-        ]);
+        // $aluger = Aluger::create([
+        //     'my_user_id' => 1,
+        //     'data_aluger' => date('Y/m/d'),
+        //     'data_devolucao' => date('Y/m/d'),
+        //     'estado_de_aluger_id' => EstadoDeAluger::AGUARDANDO,
+        // ]);
 
-        Emprestimo::create([
-            'aluger_id' => $aluger->id,
-            'aparelho_id' => 1,
-        ]);
+        // Emprestimo::create([
+        //     'aluger_id' => $aluger->id,
+        //     'aparelho_id' => 1,
+        // ]);
 
-        Emprestimo::create([
-            'aluger_id' => $aluger->id,
-            'aparelho_id' => 2,
-        ]);
+        // Emprestimo::create([
+        //     'aluger_id' => $aluger->id,
+        //     'aparelho_id' => 2,
+        // ]);
+
+        // invoca a EventoSeder
+        $this->call(EventoSeeder::class);
 
     }
 }

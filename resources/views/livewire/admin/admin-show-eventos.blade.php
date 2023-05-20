@@ -10,20 +10,7 @@
                                 <h6>Eventos</h6>
                             </div>
                             <div class="col-lg-6 col-5 my-auto text-end">
-                                <div class="dropdown float-lg-end pe-4">
-                                    <a class="cursor-pointer" id="dropdownTable" data-bs-toggle="dropdown"
-                                        aria-expanded="false">
-                                        <i class="fa fa-ellipsis-v text-secondary" aria-hidden="true"></i>
-                                    </a>
-                                    <ul class="dropdown-menu px-2 py-3 ms-sm-n4 ms-n5" aria-labelledby="dropdownTable">
-                                        <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a>
-                                        </li>
-                                        <li><a class="dropdown-item border-radius-md" href="javascript:;">Another
-                                                action</a></li>
-                                        <li><a class="dropdown-item border-radius-md" href="javascript:;">Something
-                                                else here</a></li>
-                                    </ul>
-                                </div>
+                                <a href="" class="btn btn-link ">Atualizar</a>
                             </div>
                         </div>
                     </div>
@@ -43,6 +30,9 @@
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Estado</th>
+                                        <th
+                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Acções</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -60,18 +50,54 @@
                                             </td>
                                             <td>
                                                 <a href={{ route('eventos.show', [$evento->id]) }}>
-                                                    {{ $evento->descricao }}
+                                                    @if (strlen($evento->descricao) > 30)
+                                                                {{ substr($evento->descricao, 0, 30) }}...
+                                                            @else
+                                                                {{ $evento->descricao }}
+                                                            @endif
                                                 </a>
                                             </td>
                                             <td class="align-middle text-center text-sm">
                                                 <a href={{ route('eventos.show', [$evento->id]) }}>
-                                                    {{ $evento->localizacao }}
+                                                    @if (strlen($evento->descricao) > 30)
+                                                                {{ substr($evento->localizacao, 0, 30) }}...
+                                                            @else
+                                                                {{ $evento->localizacao }}
+                                                            @endif
                                                 </a>
                                             </td>
                                             <td class="align-middle text-center text-sm">
                                                 <span
-                                                    class="badge bg-gradient-@if ($evento->estadoEvento->descricao == 'Aguardando')warning @elseif ($evento->estadoEvento->descricao == 'Aprovado')success @elseif ($evento->estadoEvento->descricao == 'Rejeitado')danger @endif">{{ $evento->estadoEvento->descricao }}
+                                                    class="badge bg-gradient-@if ($evento->estadoEvento->id == 1)warning @elseif ($evento->estadoEvento->id == 2)success @elseif ($evento->estadoEvento->id == 3)danger @endif">{{ $evento->estadoEvento->descricao }}
                                                 </span>
+                                            </td>
+                                            <td class="align-middle text-center text-sm">
+                                                <div class="d-flex mx-auto">
+                                                    <a class="btn btn-link text-info ms-auto border-0"
+                                                        data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                        href="{{ route('eventos.edit', [$evento->id]) }}"
+                                                        title="Editar">
+                                                        <i class="fa-solid fa-file-pen fa-xl"></i>
+                                                    </a>
+                                                    <a class="btn btn-link text-danger me-auto border-0"
+                                                        data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                                        data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                        title="Editar">
+                                                        <i class="fa-solid fa-trash fa-xl"></i>
+                                                    </a>
+                                                    @include('components.my_modal', [
+                                                        'titleModal' => 'exampleModal',
+                                                        'title' => 'Eliminar pedido',
+                                                        'content' => 'Tem certeza que deseja eliminar o pedido?',
+                                                        'route' => route('eventos.destroy', [$evento->id]),
+                                                        'method' => 'DELETE',
+                                                        'action' => 'Eliminar pedido',
+                                                        'type' => 'submit',
+                                                        'icon' => 'fa fa-trash',
+                                                        'other' => '',
+                                                        'close' => 'Cancelar',
+                                                    ])
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -82,7 +108,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 

@@ -14,32 +14,50 @@
     <div class="collapse navbar-collapse w-auto ps ps--active-y" id="sidenav-collapse-main">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link text-white {{ request()->routeIs('admin_dashboard') ? 'active bg-gradient-primary' : '' }} " href="{{ route('admin_dashboard') }}">
+                <a class="nav-link text-white {{ request()->routeIs('admin_dashboard') ? 'active bg-gradient-primary' : '' }} "
+                    href="{{ route('admin_dashboard') }}">
                     <span class="nav-link-text ms-1">Dashboard</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white {{ request()->routeIs('eventos.index') ? 'active bg-gradient-primary' : '' }} " href="{{ route('eventos.index') }}">
+                <a class="nav-link text-white {{ request()->routeIs('eventos.index') ? 'active bg-gradient-primary' : '' }} "
+                    href="{{ route('eventos.index') }}">
                     <span class="nav-link-text ms-1">Eventos</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white {{ request()->routeIs('aparelhos.index') ? 'active bg-gradient-primary' : '' }} " href="{{ route('aparelhos.index') }}">
+                <a class="nav-link text-white {{ request()->routeIs('aparelhos.index') ? 'active bg-gradient-primary' : '' }} "
+                    href="{{ route('aparelhos.index') }}">
                     <span class="nav-link-text ms-1">Pacotes</span>
                 </a>
             </li>
             <li class="nav-item mt-3">
-                <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Paginas do usuario</h6>
+                <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Paginas do usuario
+                </h6>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white " href="../pages/profile.html">
+                <a class="nav-link text-white " href="{{ route('profile.edit') }}">
                     <span class="nav-link-text ms-1">Perfil</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white " href="../pages/sign-up.html">
-                    <span class="nav-link-text ms-1">Terminar sessão</span>
+                <!-- implementar um modal para o logout -->
+                <a class="nav-link text-white " href="{{ route('logout') }}" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal">
+                    <span class="nav-link-text ms-1">Logout</span>
                 </a>
+                @include('components.my_modal', [
+                    'titleModal' => 'exampleModal',
+                    'title' => 'Terminar sessão',
+                    'content' => 'Tem certeza que deseja terminar a sessão?',
+                    'route' => route('logout'),
+                    'method' => 'POST',
+                    'action' => 'Terminar sessão',
+                    'type' => 'submit',
+                    'icon' => 'fa fa-trash',
+                    'other' => '',
+                    'close' => 'Cancelar',
+                ])
             </li>
         </ul>
         <div class="ps__rail-x" style="width: 250px; left: 0px; bottom: 0px;">
