@@ -46,7 +46,6 @@
                                 {{ $aparelho->descricao }}
                             </p>
                         </div>
-                        <hr class="dark horizontal my-0">
                         <div class="card-footer d-flex">
                             <p class="font-weight-normal my-auto">{{ $aparelho->preco_de_aluguer }} Kz</p>
                             <i class="material-icons position-relative ms-auto text-lg me-1 my-auto"></i>
@@ -56,7 +55,6 @@
                 </div>
             @endforeach
         </div>
-
     </div>
     <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
         <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div>

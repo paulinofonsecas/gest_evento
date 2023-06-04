@@ -33,6 +33,33 @@ class EventoController extends Controller
         }
     }
 
+    // rota para adicionar meio de pagamento
+    public function add_meio_de_pagamento($id)
+    {
+        $evento = Evento::find($id);
+        return response(view('livewire.add-meio-de-pagamento', [
+            'evento' => $evento,
+        ]));
+    }
+
+    // rota para mostrar mensagem de pagamento feito com sucesso
+    public function pagamento_feito($id)
+    {
+        $evento = Evento::find($id);
+        return response(view('livewire.pagamento-feito-com-sucesso', [
+            'evento' => $evento,
+        ]));
+    }
+
+    // rota para cancelar um evento
+    public function cancelar_evento($id)
+    {
+        $evento = Evento::find($id);
+        $evento->estado_evento_id = EstadoDeAluger::CANCELADO;
+        $evento->save();
+        return redirect()->route('eventos.index');
+    }
+
     /**
      * Show the form for creating a new resource.
      */

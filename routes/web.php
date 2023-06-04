@@ -29,8 +29,9 @@ Route::get('/dashboard', function () {
     if ($user->type_id == Usertype::ADMIN) {
         return redirect()->route('admin_dashboard');
     } else {
+        $eventos = Evento::where('data_evento', '>=', now()->format('Y-m-d'))->orderBy('data_evento', 'asc')->take(10)->get();
         return view('livewire.my-dashboard', [
-            'eventos' => Evento::all(),
+            'eventos' => $eventos,
         ]);
     }
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -51,7 +52,19 @@ Route::get('/aparelho/delete/{id}', [AparelhoController::class, 'destroy'])->mid
 
 Route::get('/aluger', [AlugerController::class, 'index'])->middleware(['auth', 'verified', 'can:normal'])->name('aluger');
 
-Route::resource('evento', EventoController::class)->middleware(['auth', 'verified', 'can:normal']);
+Route::group(['middleware' => ['auth', 'verified', 'can:normal']], function () {
+    Route::get('/evento/create/{id}', [EventoController::class, 'create'])->name('evento.create');
+    Route::post('/evento/store/{id}', [EventoController::class, 'store'])->name('evento.store');
+    Route::get('/evento/edit/{id}', [EventoController::class, 'edit'])->name('evento.edit');
+    Route::post('/evento/update/{id}', [EventoController::class, 'update'])->name('evento.update');
+    Route::get('/evento/delete/{id}', [EventoController::class, 'destroy'])->name('evento.delete');
+
+    // rotas customizadas
+    Route::resource('evento', EventoController::class)->middleware(['auth', 'verified', 'can:normal']);
+    Route::get('/evento/pagamento/{id}', [EventoController::class, 'add_meio_de_pagamento'])->middleware(['auth', 'verified', 'can:normal'])->name('evento.meioPagamento');
+    Route::get('/evento/cancelar', [EventoController::class, 'cancelar_evento'])->middleware(['auth', 'verified', 'can:normal'])->name('evento.cancelar');
+    Route::get('/evento/pagamentoFeito/{id}', [EventoController::class, 'pagamento_feito'])->middleware(['auth', 'verified', 'can:normal'])->name('evento.pagamentoFeito');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

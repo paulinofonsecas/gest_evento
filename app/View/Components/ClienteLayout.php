@@ -14,6 +14,8 @@ class ClienteLayout extends Component
     {
         return view('layouts.cliente', [
             'usuario' => auth()->user(),
+        
+
         ]);
     }
 }

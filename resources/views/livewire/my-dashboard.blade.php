@@ -7,101 +7,60 @@
                     <div class="card-header pb-0">
                         <div class="row">
                             <div class="col-lg-6 col-7">
-                                <h6>Eventos</h6>
+                                <h6>Eventos em espera</h6>
                             </div>
                             <div class="col-lg-6 col-5 my-auto text-end">
                                 <a href="{{ route('evento.create') }}" class="btn btn-link ">Novo evento</a>
                             </div>
                         </div>
                     </div>
-                    <div class="card-body px-0 pb-2">
+                    <div class="card-body px-3 pb-2">
                         <div class="table-responsive">
                             <table class="table align-items-center mb-0">
                                 <thead>
                                     <tr>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Cliente</th>
                                         <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Descrição</th>
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Nº</th>
                                         <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Localização</th>
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Data de inicio</th>
                                         <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Estado</th>
-                                        <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Acções</th>
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Data de termino</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <?php $i = 1; ?>
                                     @foreach ($eventos as $evento)
                                         <tr>
-                                            <td>
-                                                <a href={{ route('eventos.show', [$evento->id]) }}>
-                                                    <div class="d-flex px-2 py-1">
-                                                        <div class="d-flex flex-column justify-content-center">
-                                                            <h6 class="mb-0 text-sm">{{ $evento->user->name }}
-                                                            </h6>
-                                                        </div>
+                                            <td class="align-middle text-center text-sm"
+                                                style="vertical-align: middle;">
+                                                <div class="d-flex px-2 py-1 text-center">
+                                                    <div class="d-flex flex-column justify-content-center">
+                                                        <h6 class="mb-0 text-sm">{{ $i }}</h6>
                                                     </div>
-                                                </a>
+                                                </div>
                                             </td>
-                                            <td>
-                                                <a href={{ route('eventos.show', [$evento->id]) }}>
-                                                    @if (strlen($evento->descricao) > 30)
-                                                                {{ substr($evento->descricao, 0, 30) }}...
-                                                            @else
-                                                                {{ $evento->descricao }}
-                                                            @endif
-                                                </a>
+                                            <td class="align-middle text-center text-sm"
+                                                style="vertical-align: middle;">
+                                                <div class="d-flex px-2 py-1 text-center">
+                                                    <div class="d-flex flex-column justify-content-center">
+                                                        <h6 class="mb-0 text-sm">{{ $evento->data_evento }}</h6>
+                                                    </div>
+                                                </div>
                                             </td>
-                                            <td class="align-middle text-center text-sm">
-                                                <a href={{ route('eventos.show', [$evento->id]) }}>
-                                                    @if (strlen($evento->descricao) > 30)
-                                                                {{ substr($evento->localizacao, 0, 30) }}...
-                                                            @else
-                                                                {{ $evento->localizacao }}
-                                                            @endif
-                                                </a>
-                                            </td>
-                                            <td class="align-middle text-center text-sm">
-                                                <span
-                                                    class="badge bg-gradient-@if ($evento->estadoEvento->id == 1)warning @elseif ($evento->estadoEvento->id == 2)success @elseif ($evento->estadoEvento->id == 3)danger @endif">{{ $evento->estadoEvento->descricao }}
-                                                </span>
-                                            </td>
-                                            <td class="align-middle text-center text-sm">
-                                                <div class="d-flex mx-auto">
-                                                    <a class="btn btn-link text-info ms-auto border-0"
-                                                        data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                        href="{{ route('eventos.edit', [$evento->id]) }}"
-                                                        title="Editar">
-                                                        <i class="fa-solid fa-file-pen fa-xl"></i>
-                                                    </a>
-                                                    <a class="btn btn-link text-danger me-auto border-0"
-                                                        data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                                        data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                        title="Editar">
-                                                        <i class="fa-solid fa-trash fa-xl"></i>
-                                                    </a>
-                                                    @include('components.my_modal', [
-                                                        'titleModal' => 'exampleModal',
-                                                        'title' => 'Eliminar pedido',
-                                                        'content' => 'Tem certeza que deseja eliminar o pedido?',
-                                                        'route' => route('eventos.destroy', [$evento->id]),
-                                                        'method' => 'DELETE',
-                                                        'action' => 'Eliminar pedido',
-                                                        'type' => 'submit',
-                                                        'icon' => 'fa fa-trash',
-                                                        'other' => '',
-                                                        'close' => 'Cancelar',
-                                                    ])
+                                            <td class="align-middle text-center text-sm"
+                                                style="vertical-align: middle;">
+                                                <div class="d-flex px-2 py-1 text-center">
+                                                    <div class="d-flex flex-column justify-content-center">
+                                                        <h6 class="mb-0 text-sm">{{ $evento->data_termino }}</h6>
+                                                    </div>
                                                 </div>
                                             </td>
                                         </tr>
+                                        <?php $i++; ?>
                                     @endforeach
-
                                 </tbody>
                             </table>
                         </div>

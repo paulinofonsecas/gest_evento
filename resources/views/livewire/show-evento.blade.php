@@ -24,59 +24,58 @@
                                 @csrf
                                 <div class="card-body">
                                     <div class="input-group input-group-static mb-4">
-                                        <label for="descricao">Data do evento</label>
-                                        <input disabled id="Data do evento" class="form-control" type="date"
-                                            name="data_evento" data-="{{ $evento->data_evento }}" required autofocus
-                                            autocomplete="username" value="{{ $evento->data_evento }}" />
+                                        <label class="h4" for="descricao">Data do evento</label>
+                                        <input disabled id="Data do evento" style="font-size: 13pt" class="form-control"
+                                            type="date" name="data_evento" data-="{{ $evento->data_evento }}"
+                                            required autofocus autocomplete="username"
+                                            value="{{ $evento->data_evento }}" />
                                     </div>
                                     <div class="input-group input-group-static mb-4">
-                                        <label for="descricao">Data de término</label>
-                                        <input disabled id="Data de termino" class="form-control" type="date"
-                                            name="data_termino" required autofocus autocomplete="username"
-                                            value="{{ $evento->data_termino }}" />
+                                        <label class="h4" for="descricao">Data de término</label>
+                                        <input disabled id="Data de termino" style="font-size: 13pt"
+                                            class="form-control" type="date" name="data_termino" required autofocus
+                                            autocomplete="username" value="{{ $evento->data_termino }}" />
                                     </div>
                                     <div class="input-group input-group-static mb-4">
-                                        <label for="descricao">Descrição</label>
-                                        <textarea disabled class="form-control" name="descricao" id="descricao" rows="3"
+                                        <label class="h4" for="descricao">Descrição</label>
+                                        <textarea disabled style="font-size: 13pt" class="form-control" name="descricao" id="descricao" rows="3"
                                             placeholder="Descreva o seu evento">{{ $evento->descricao }}</textarea>
                                     </div>
 
                                     <div class="input-group input-group-static mb-4">
-                                        <label for="precoAluger">Localização</label>
+                                        <label class="h4" for="precoAluger">Localização</label>
                                         <input disabled value="{{ $evento->localizacao }}" type="text"
-                                            name="localizacao" class="form-control" id="precoAluger" required
-                                            placeholder="Localização do evento">
+                                            name="localizacao" style="font-size: 13pt" class="form-control"
+                                            id="precoAluger" required placeholder="Localização do evento">
+                                    </div>
+                                    <div class="input-group input-group-static mb-4">
+                                        <label class="h4" for="precoAluger">Pacote</label>
+                                        <input disabled value="{{ $evento->pacote->nome }}" type="text"
+                                            name="localizacao" style="font-size: 13pt" class="form-control"
+                                            id="precoAluger">
                                     </div>
 
-                                    <div class="input-group input-group-static mb-4">
-                                        <label for="pacote">Estado</label>
-                                        <select disabled
-                                            class="block font-medium text-sm text-gray-700border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
-                                            required name="pacote_id" id="pacote" style="width: 100%">
-                                            @foreach ($estados as $estado)
-                                                {{ $selected = $estado->id == $evento->estado_id ? 'selected' : '' }}
-                                                <option {{ $selected }} value="{{ $estado->id }}">
-                                                    {{ Str::upper($estado->descricao) }}
-                                                </option>
-                                            @endforeach
-                                        </select>
+                                    <div class="">
+                                        <h4>Estado da solicitação</h4>
+                                        <br>
+                                        <span
+                                            class="badge bg-gradient-@if ($evento->estadoEvento->id == 1) warning @elseif ($evento->estadoEvento->id == 2)success @elseif ($evento->estadoEvento->id == 3)danger @elseif ($evento->estadoEvento->id == 4)warning @elseif ($evento->estadoEvento->id == 5)primary @endif">{{ $evento->estadoEvento->descricao }}
+                                        </span>
+                                    </div>
+                                    <div>
+                                        @if ($evento->estadoEvento->id == 7)
+                                            <a href="{{ route('evento.meioPagamento', [$evento->id]) }}"
+                                                class="btn btn-outline-primary btn-lg w-100">Adicionar meio de
+                                                pagamento</a>
+                                        @endif
+
+                                        @if ($evento->estadoEvento->id == 1)
+                                            <a href="{{ route('evento.cancelar', [$evento->id]) }}"
+                                                class="btn btn-outline-danger btn-lg w-100">Cancelar evento</a>
+                                        @endif
                                     </div>
 
-                                    <div class="input-group input-group-static mb-4">
-                                        <label for="pacote">Pacote</label>
-                                        <select disabled
-                                            class="block font-medium text-sm text-gray-700border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
-                                            required name="pacote_id" id="pacote" style="width: 100%">
-                                            @foreach ($pacotes as $pacote)
-                                                {{ $selected = $pacote->id == $evento->pacote_id ? 'selected' : '' }}
-                                                <option {{ $selected }} value="{{ $pacote->id }}">
-                                                    {{ Str::upper($pacote->nome) }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
                                 </div>
-
                             </form>
                         </div>
                     </div>

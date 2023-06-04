@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 14-Abr-2023 às 11:38
--- Versão do servidor: 10.1.37-MariaDB
--- versão do PHP: 7.2.12
+-- Tempo de geração: 04-Jun-2023 às 21:43
+-- Versão do servidor: 10.4.28-MariaDB
+-- versão do PHP: 8.1.17
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -19,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `gest_eventos`
+-- Banco de dados: `gest_eventos`
 --
 
 -- --------------------------------------------------------
@@ -46,13 +45,13 @@ CREATE TABLE `alugers` (
 
 CREATE TABLE `aparelhos` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `nome` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `descricao` text COLLATE utf8mb4_unicode_ci,
+  `nome` varchar(191) NOT NULL,
+  `descricao` text DEFAULT NULL,
   `preco_de_aluguer` double NOT NULL,
   `disponibilidade_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `image_url` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image_url` varchar(191) DEFAULT NULL,
   `categoria_id` bigint(20) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -61,7 +60,16 @@ CREATE TABLE `aparelhos` (
 --
 
 INSERT INTO `aparelhos` (`id`, `nome`, `descricao`, `preco_de_aluguer`, `disponibilidade_id`, `created_at`, `updated_at`, `image_url`, `categoria_id`) VALUES
-(1, 'Pacote de festar', 'Testa', 12000, 1, '2023-04-06 14:01:57', '2023-04-06 14:01:57', '300343053_609532977544936_4885636820072288328_n_1680789717.jpg', NULL);
+(1, 'enim', 'Temporibus maxime voluptatem nesciunt non consequuntur quis. Cumque laudantium rem expedita cum ipsa. Vel voluptas id quo esse sapiente quis ad. Commodi omnis minus beatae ut veniam amet et.', 87.83, 1, '2023-06-04 18:07:07', '2023-06-04 18:07:07', NULL, NULL),
+(2, 'rem', 'Alias mollitia quo rem et aut eligendi et aut. Fugit in rerum veritatis nulla.', 58.96, 1, '2023-06-04 18:07:07', '2023-06-04 18:07:07', NULL, NULL),
+(3, 'id', 'Nihil atque placeat voluptas ipsum natus. Possimus corporis iste reprehenderit soluta impedit. Quia debitis cum at tenetur et autem. Iste labore rerum ut porro quia.', 18.73, 1, '2023-06-04 18:07:07', '2023-06-04 18:07:07', NULL, NULL),
+(4, 'rerum', 'Inventore sapiente incidunt maxime voluptatum expedita. Ut eum similique quos fuga voluptatem velit enim sed. Voluptatem neque eos nihil vitae. Quos autem vero autem quos nemo aut.', 79.63, 1, '2023-06-04 18:07:07', '2023-06-04 18:07:07', NULL, NULL),
+(5, 'labore', 'Commodi eum et eius ut ut unde. Asperiores excepturi architecto nam esse. Nemo earum eum quia ipsum omnis. Mollitia unde qui recusandae est aliquam provident voluptas.', 67.89, 1, '2023-06-04 18:07:07', '2023-06-04 18:07:07', NULL, NULL),
+(6, 'consequatur', 'Corrupti cum quod optio est eius et numquam. Rerum tempora et ut expedita. Ut eum eos et consectetur iste.', 67.15, 1, '2023-06-04 18:07:07', '2023-06-04 18:07:07', NULL, NULL),
+(7, 'occaecati', 'Et et quasi animi voluptatibus debitis dolore labore. Itaque accusamus dolorum excepturi tempora. Quas beatae tempore culpa necessitatibus voluptas et. Vero eum ipsa enim omnis alias iste.', 15.49, 1, '2023-06-04 18:07:07', '2023-06-04 18:07:07', NULL, NULL),
+(8, 'veniam', 'Adipisci labore tempora ipsum excepturi dolores sit voluptas. Numquam voluptatum veniam aut ut neque. Repellendus nam expedita autem blanditiis et odio rerum exercitationem. Et doloribus ea ut et ullam quidem neque rerum.', 86.27, 1, '2023-06-04 18:07:07', '2023-06-04 18:07:07', NULL, NULL),
+(9, 'qui', 'Labore sit et exercitationem velit quis. Ullam sint quo nisi qui unde ad. Sit tenetur adipisci culpa eveniet et.', 82.13, 1, '2023-06-04 18:07:07', '2023-06-04 18:07:07', NULL, NULL),
+(10, 'ut', 'Autem est est aspernatur inventore esse. Molestias eum aut sint perferendis illo. Provident expedita saepe temporibus sunt magnam quis. Nihil animi ea blanditiis repudiandae excepturi corporis facilis.', 54.19, 1, '2023-06-04 18:07:07', '2023-06-04 18:07:07', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -71,7 +79,7 @@ INSERT INTO `aparelhos` (`id`, `nome`, `descricao`, `preco_de_aluguer`, `disponi
 
 CREATE TABLE `categorias` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `descricao` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descricao` varchar(191) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -84,7 +92,7 @@ CREATE TABLE `categorias` (
 
 CREATE TABLE `disponibilidades` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `descricao` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descricao` varchar(191) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -94,8 +102,8 @@ CREATE TABLE `disponibilidades` (
 --
 
 INSERT INTO `disponibilidades` (`id`, `descricao`, `created_at`, `updated_at`) VALUES
-(1, 'disponivel', '2023-02-27 18:17:47', '2023-02-27 18:17:47'),
-(2, 'ocupado', '2023-02-27 18:17:47', '2023-02-27 18:17:47');
+(1, 'Disponivel', '2023-06-04 18:07:06', '2023-06-04 18:07:06'),
+(2, 'Indisponivel', '2023-06-04 18:07:06', '2023-06-04 18:07:06');
 
 -- --------------------------------------------------------
 
@@ -119,7 +127,7 @@ CREATE TABLE `emprestimos` (
 
 CREATE TABLE `estado_de_alugers` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `descricao` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descricao` varchar(191) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -129,9 +137,13 @@ CREATE TABLE `estado_de_alugers` (
 --
 
 INSERT INTO `estado_de_alugers` (`id`, `descricao`, `created_at`, `updated_at`) VALUES
-(1, 'Aguardando', '2023-02-27 18:17:47', '2023-02-27 18:17:47'),
-(2, 'Aceite', '2023-02-27 18:17:47', '2023-02-27 18:17:47'),
-(3, 'Finalizado', '2023-02-27 18:17:47', '2023-02-27 18:17:47');
+(1, 'Aguardando', '2023-06-04 18:07:07', '2023-06-04 18:07:07'),
+(2, 'Aceite', '2023-06-04 18:07:07', '2023-06-04 18:07:07'),
+(3, 'Finalizado', '2023-06-04 18:07:07', '2023-06-04 18:07:07'),
+(4, 'Em progresso', '2023-06-04 18:07:07', '2023-06-04 18:07:07'),
+(5, 'Rejeitado', '2023-06-04 18:07:07', '2023-06-04 18:07:07'),
+(6, 'Cancelado', '2023-06-04 18:07:07', '2023-06-04 18:07:07'),
+(7, 'Aguardando pagamento', '2023-06-04 18:07:07', '2023-06-04 18:07:07');
 
 -- --------------------------------------------------------
 
@@ -143,11 +155,11 @@ CREATE TABLE `eventos` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `data_evento` date NOT NULL,
   `data_termino` date NOT NULL,
-  `localizacao` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `localizacao` varchar(191) NOT NULL,
   `estado_evento_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `descricao` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descricao` text NOT NULL,
   `pacote_id` bigint(20) UNSIGNED NOT NULL,
   `user_id` bigint(20) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -157,8 +169,16 @@ CREATE TABLE `eventos` (
 --
 
 INSERT INTO `eventos` (`id`, `data_evento`, `data_termino`, `localizacao`, `estado_evento_id`, `created_at`, `updated_at`, `descricao`, `pacote_id`, `user_id`) VALUES
-(1, '2023-04-06', '2023-04-08', 'Andulo', 1, '2023-04-06 14:13:21', '2023-04-06 14:13:21', 'teste', 1, 1),
-(2, '2023-05-08', '2023-05-10', 'Andulo', 1, '2023-04-06 14:13:21', '2023-04-06 14:13:21', 'teste', 1, 1);
+(1, '2023-06-04', '2023-06-04', '847 Hagenes Springs Suite 151\nSchinnerfort, KS 17289-6212', 7, '2023-06-04 18:07:07', '2023-06-04 18:10:59', 'Tempora et eveniet nemo ut. Aut quam quia aliquam tenetur totam sed facilis. Inventore libero voluptatem dolor voluptate accusamus et. Ipsum qui provident at qui excepturi.', 2, 9),
+(2, '2023-06-04', '2023-06-04', '70587 Barton Forge\nPaxtonchester, LA 66475-9890', 1, '2023-06-04 18:07:07', '2023-06-04 18:07:07', 'Iure unde rerum ut. Omnis sequi rem eaque ea laudantium. Quasi voluptatem illo in corporis culpa enim totam.', 7, 4),
+(3, '2023-06-04', '2023-06-04', '23558 Hackett Parkways\nPort Caleigh, KS 88276', 1, '2023-06-04 18:07:07', '2023-06-04 18:07:07', 'Nesciunt voluptate dolore doloribus facere. Iusto voluptatem ut dolorem quod libero voluptas saepe. Occaecati reiciendis velit impedit ut.', 5, 9),
+(4, '2023-06-04', '2023-06-04', '39567 Melany Curve Suite 119\nSouth Vidaview, CO 40054', 7, '2023-06-04 18:07:07', '2023-06-04 18:18:24', 'Illo at eius dolores. Rerum ab inventore dicta qui animi distinctio ducimus eveniet. Accusantium dicta aut voluptates quam voluptatem fugit. Maiores hic facere dolor sed doloremque dolore.', 9, 10),
+(5, '2023-06-04', '2023-06-04', '31047 Kunde Key\nPort Sanfordtown, IN 66807', 1, '2023-06-04 18:07:07', '2023-06-04 18:07:07', 'Numquam voluptatibus perspiciatis tenetur. Sit qui ullam consequatur dolorem. Est optio blanditiis incidunt numquam nihil iste. Optio reiciendis ratione ullam tempora ut consectetur occaecati.', 8, 7),
+(6, '2023-06-04', '2023-06-04', '468 Emil Drive Apt. 959\nSouth Dahlia, OR 64787', 1, '2023-06-04 18:07:07', '2023-06-04 18:07:07', 'Dolorem porro ut ipsam iure. Ex voluptatem quo numquam ut repudiandae minus reprehenderit. Commodi animi nostrum quia quisquam ipsam quibusdam. Laboriosam vel alias aut quidem magnam.', 6, 4),
+(7, '2023-06-04', '2023-06-04', '250 Hoppe Loaf Suite 326\nSatterfieldberg, VT 22944-2402', 1, '2023-06-04 18:07:07', '2023-06-04 18:17:03', 'Deserunt est maiores sapiente deserunt nam. Sed commodi et rerum quasi nulla harum.', 4, 10),
+(8, '2023-06-04', '2023-06-04', '2262 Lockman Fort\nTessieshire, DC 61746-8287', 1, '2023-06-04 18:07:07', '2023-06-04 18:07:07', 'Neque similique officia architecto voluptatem commodi in. Accusamus sint cumque facere distinctio qui consequatur totam. Optio quaerat eligendi doloremque sed.', 9, 4),
+(9, '2023-06-04', '2023-06-04', '98411 Angie Branch\nJessicamouth, NY 21589-6657', 1, '2023-06-04 18:07:07', '2023-06-04 18:07:07', 'Dolores est maiores harum error et aliquid ut et. Officia vitae reprehenderit reprehenderit voluptas eos facere et. Reprehenderit vel ab repudiandae quos eum.', 2, 7),
+(10, '2023-06-04', '2023-06-04', '1124 Arvid Crest\nNew Eleonore, MD 66069-2083', 1, '2023-06-04 18:07:07', '2023-06-04 18:07:07', 'Nam aut beatae minus sit sed excepturi. Ut officiis enim placeat debitis quia.', 3, 4);
 
 -- --------------------------------------------------------
 
@@ -168,12 +188,12 @@ INSERT INTO `eventos` (`id`, `data_evento`, `data_termino`, `localizacao`, `esta
 
 CREATE TABLE `failed_jobs` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `uuid` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `uuid` varchar(191) NOT NULL,
+  `connection` text NOT NULL,
+  `queue` text NOT NULL,
+  `payload` longtext NOT NULL,
+  `exception` longtext NOT NULL,
+  `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -184,7 +204,7 @@ CREATE TABLE `failed_jobs` (
 
 CREATE TABLE `migrations` (
   `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `migration` varchar(191) NOT NULL,
   `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -224,8 +244,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 --
 
 CREATE TABLE `password_reset_tokens` (
-  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191) NOT NULL,
+  `token` varchar(191) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -237,11 +257,11 @@ CREATE TABLE `password_reset_tokens` (
 
 CREATE TABLE `personal_access_tokens` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `tokenable_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tokenable_type` varchar(191) NOT NULL,
   `tokenable_id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `abilities` text COLLATE utf8mb4_unicode_ci,
+  `name` varchar(191) NOT NULL,
+  `token` varchar(64) NOT NULL,
+  `abilities` text DEFAULT NULL,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `expires_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -256,14 +276,14 @@ CREATE TABLE `personal_access_tokens` (
 
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(191) NOT NULL,
+  `email` varchar(191) NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(191) NOT NULL,
+  `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `bi` varchar(14) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `bi` varchar(14) NOT NULL,
   `type_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -272,8 +292,16 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `bi`, `type_id`) VALUES
-(1, 'paulino fonseca', 'paulino@gmail.com', NULL, '$2y$10$G4DvZXsZxbJoLGZ1pq6IbeEc7/gT.4B3BzTh7dM36pHNsY0CjcUyi', NULL, '2023-04-06 13:05:19', '2023-04-06 13:05:19', '00412705BE041', 2),
-(2, 'lucas mendes', 'lucas@gmail.com', NULL, '$2y$10$WaambW/naBPFT7ARooxOxecnUGu7//Rw7v6k2JfkVZzXLQ6woIIVi', NULL, '2023-04-11 13:57:36', '2023-04-11 13:57:36', '004100865BE233', 1);
+(1, 'Sydney Jakubowski', 'edwin.wilkinson@example.com', '2023-06-04 18:07:06', '$2y$10$Foc.Ke6vCZxTyhqLPV95M..BZkw49sSPg3uuwYcAIC3tPH7eVYqG2', 'Gl3cGnJt0H', '2023-06-04 18:07:07', '2023-06-04 18:07:07', '9009104571843', 2),
+(2, 'Beryl Durgan', 'hruecker@example.net', '2023-06-04 18:07:06', '$2y$10$DcQQT3teVaEU8Dqw2ir2Jegjrww7AX5wjn/yROuyj.PAR7NEprh8m', 'oKGgGpesNb', '2023-06-04 18:07:07', '2023-06-04 18:07:07', '5761132623581', 1),
+(3, 'Imogene O\'Connell', 'stark.eriberto@example.net', '2023-06-04 18:07:06', '$2y$10$Dromf3v.6y5MaaedIW/.n.h8qi7vua.bRix9V37YgP4V4TtOBexR6', 'IGkM8zRCPg', '2023-06-04 18:07:07', '2023-06-04 18:07:07', '86376751231897', 1),
+(4, 'Antonietta Gleason', 'kyra46@example.com', '2023-06-04 18:07:06', '$2y$10$VpJdGYHPFb7HcFDxE/34AOoD1faCnjZrGYSidgIhz0Yo3H.6fpm1q', '01isgZyKRM', '2023-06-04 18:07:07', '2023-06-04 18:07:07', '77309177676804', 1),
+(5, 'Miss Adrienne Feest III', 'nasir12@example.com', '2023-06-04 18:07:06', '$2y$10$NQZ5rdM3WNQ9YfXrj2UG5.BMXBY2yMGTMUrNW78AdeRogK6tLzTau', 'sdn2jwzesbbBsChe2qJam6zCEQihG6ZKx66tpEREYj53KQkoeI80DYORA1Vf', '2023-06-04 18:07:07', '2023-06-04 18:07:07', '8653714851944', 2),
+(6, 'Prof. Justina Dickens V', 'littel.santina@example.net', '2023-06-04 18:07:07', '$2y$10$dvf55KYwDIZ5MOCRUTkW2eI4qQ/z0fnui9.V7mAF/7fkRcJ79CGOW', '8cwH1vT5jK8uz1MWklXdAVBWRT6ME8PXgccx0R4UhZHzbqpWqVnSntEXrrw1', '2023-06-04 18:07:07', '2023-06-04 18:07:07', '47061826429652', 2),
+(7, 'Miss Heidi Kuhn IV', 'alessandra.kuvalis@example.org', '2023-06-04 18:07:07', '$2y$10$vFksyzRODzQU2j6gMoTdz.oXyXjpiRp1irjOyL9KlPiXK8Z1Egd3O', 'zAt3sicorI', '2023-06-04 18:07:07', '2023-06-04 18:07:07', '37388765364054', 1),
+(8, 'Jasper Romaguera', 'elody26@example.com', '2023-06-04 18:07:07', '$2y$10$zm5udBWjH64EjftamslWmOw1q1CATF3mo9ssveUdal.gLmZGqFqOm', 'vPhEbhH4Ba', '2023-06-04 18:07:07', '2023-06-04 18:07:07', '75141961427707', 1),
+(9, 'Mrs. Antonetta Grant', 'maybell.hauck@example.org', '2023-06-04 18:07:07', '$2y$10$/enlrVYpRZgViujp57bKBOY0R9QWwgoyCzmEjgCGO7OxT4DhQxZpO', '5edp23HB3J', '2023-06-04 18:07:07', '2023-06-04 18:07:07', '2416098723079', 2),
+(10, 'Mr. Nash Conn', 'malika94@example.org', '2023-06-04 18:07:07', '$2y$10$Krneib96pG9i8FhV.PPaheuccYRHN.WZIqTUQRFALPHxIyVK0kRIS', 'r7E3Yt5Jx3', '2023-06-04 18:07:07', '2023-06-04 18:07:07', '64958183860504', 2);
 
 -- --------------------------------------------------------
 
@@ -283,7 +311,7 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `re
 
 CREATE TABLE `usertypes` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `descricao` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descricao` varchar(191) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -298,11 +326,11 @@ INSERT INTO `usertypes` (`id`, `descricao`, `created_at`, `updated_at`) VALUES
 (3, 'convidado', NULL, NULL);
 
 --
--- Indexes for dumped tables
+-- Índices para tabelas despejadas
 --
 
 --
--- Indexes for table `alugers`
+-- Índices para tabela `alugers`
 --
 ALTER TABLE `alugers`
   ADD PRIMARY KEY (`id`),
@@ -310,7 +338,7 @@ ALTER TABLE `alugers`
   ADD KEY `alugers_estado_de_aluger_id_foreign` (`estado_de_aluger_id`);
 
 --
--- Indexes for table `aparelhos`
+-- Índices para tabela `aparelhos`
 --
 ALTER TABLE `aparelhos`
   ADD PRIMARY KEY (`id`),
@@ -318,19 +346,19 @@ ALTER TABLE `aparelhos`
   ADD KEY `aparelhos_categoria_id_foreign` (`categoria_id`);
 
 --
--- Indexes for table `categorias`
+-- Índices para tabela `categorias`
 --
 ALTER TABLE `categorias`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `disponibilidades`
+-- Índices para tabela `disponibilidades`
 --
 ALTER TABLE `disponibilidades`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `emprestimos`
+-- Índices para tabela `emprestimos`
 --
 ALTER TABLE `emprestimos`
   ADD PRIMARY KEY (`id`),
@@ -338,13 +366,13 @@ ALTER TABLE `emprestimos`
   ADD KEY `emprestimos_aparelho_id_foreign` (`aparelho_id`);
 
 --
--- Indexes for table `estado_de_alugers`
+-- Índices para tabela `estado_de_alugers`
 --
 ALTER TABLE `estado_de_alugers`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `eventos`
+-- Índices para tabela `eventos`
 --
 ALTER TABLE `eventos`
   ADD PRIMARY KEY (`id`),
@@ -352,26 +380,26 @@ ALTER TABLE `eventos`
   ADD KEY `eventos_pacote_id_foreign` (`pacote_id`);
 
 --
--- Indexes for table `failed_jobs`
+-- Índices para tabela `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
 
 --
--- Indexes for table `migrations`
+-- Índices para tabela `migrations`
 --
 ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `password_reset_tokens`
+-- Índices para tabela `password_reset_tokens`
 --
 ALTER TABLE `password_reset_tokens`
   ADD PRIMARY KEY (`email`);
 
 --
--- Indexes for table `personal_access_tokens`
+-- Índices para tabela `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
   ADD PRIMARY KEY (`id`),
@@ -379,7 +407,7 @@ ALTER TABLE `personal_access_tokens`
   ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
 
 --
--- Indexes for table `users`
+-- Índices para tabela `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
@@ -387,89 +415,89 @@ ALTER TABLE `users`
   ADD KEY `users_type_id_foreign` (`type_id`);
 
 --
--- Indexes for table `usertypes`
+-- Índices para tabela `usertypes`
 --
 ALTER TABLE `usertypes`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT de tabelas despejadas
 --
 
 --
--- AUTO_INCREMENT for table `alugers`
+-- AUTO_INCREMENT de tabela `alugers`
 --
 ALTER TABLE `alugers`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `aparelhos`
+-- AUTO_INCREMENT de tabela `aparelhos`
 --
 ALTER TABLE `aparelhos`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT for table `categorias`
+-- AUTO_INCREMENT de tabela `categorias`
 --
 ALTER TABLE `categorias`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `disponibilidades`
+-- AUTO_INCREMENT de tabela `disponibilidades`
 --
 ALTER TABLE `disponibilidades`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `emprestimos`
+-- AUTO_INCREMENT de tabela `emprestimos`
 --
 ALTER TABLE `emprestimos`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `estado_de_alugers`
+-- AUTO_INCREMENT de tabela `estado_de_alugers`
 --
 ALTER TABLE `estado_de_alugers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `eventos`
+-- AUTO_INCREMENT de tabela `eventos`
 --
 ALTER TABLE `eventos`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT for table `failed_jobs`
+-- AUTO_INCREMENT de tabela `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `migrations`
+-- AUTO_INCREMENT de tabela `migrations`
 --
 ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
--- AUTO_INCREMENT for table `personal_access_tokens`
+-- AUTO_INCREMENT de tabela `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT de tabela `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT for table `usertypes`
+-- AUTO_INCREMENT de tabela `usertypes`
 --
 ALTER TABLE `usertypes`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- Constraints for dumped tables
+-- Restrições para despejos de tabelas
 --
 
 --

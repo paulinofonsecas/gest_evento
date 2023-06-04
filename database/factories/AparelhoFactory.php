@@ -18,11 +18,11 @@ class AparelhoFactory extends Factory
     public function definition(): array
     {
         return [
-            'nome' => fake()->name(),
-            'descricao' => fake()->text(),
-            'preco_de_aluguer' => fake()->randomNumber() * 2500,
-            'periodo_minimo_de_aluger' => fake()->time(),
+            'nome' => $this->faker->word,
+            'descricao' => $this->faker->paragraph,
+            'preco_de_aluguer' => $this->faker->randomFloat(2, 10, 100),
             'disponibilidade_id' => 1,
         ];
     }
 }
+
