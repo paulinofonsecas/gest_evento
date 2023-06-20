@@ -72,7 +72,7 @@
                             </div>
                             <div class="row justify-content-center">
                                 <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                    class=" col-4 btn btn-danger mx-2">Eliminar
+                                    class=" col-4 btn btn-danger mx-2">Cancelar
                                     pedido</a>
                                 @include('components.my_modal', [
                                     'titleModal' => 'exampleModal',

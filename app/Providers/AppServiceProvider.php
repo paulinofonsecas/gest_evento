@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
 
         Gate::define('admin', function (User $user) {
-            return $user->type_id == Usertype::ADMIN;
+            return $user->type_id == Usertype::ADMIN || $user->type_id == Usertype::GERENTE;
         });
 
         Gate::define('normal', function (User $user) {

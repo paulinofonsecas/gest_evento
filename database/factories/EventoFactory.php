@@ -21,10 +21,11 @@ class EventoFactory extends Factory
         $aparelhos = Aparelho::pluck('id')->toArray();
         $users = User::pluck('id')->toArray();
 
+        // incrementa a data atual mas 10 dias randomicos
         return [
             'estado_evento_id' => 1,
-            'data_evento' => $this->faker->dateTimeBetween('now')->format('Y-m-d H:i:s'),
-            'data_termino' => $this->faker->dateTimeBetween('now')->format('Y-m-d H:i:s'),
+            'data_evento' => $this->faker->dateTimeBetween('now', '+1 days')->format('Y-m-d H:i:s'), // '2021-06-01 00:00:00
+            'data_termino' => $this->faker->dateTimeBetween('now', '+3 days')->format('Y-m-d H:i:s'), // '2021-06-01 00:00:00
             'localizacao' => $this->faker->address(),
             'descricao' => $this->faker->text(),
             'user_id' => $this->faker->randomElement($users),

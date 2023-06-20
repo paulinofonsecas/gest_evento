@@ -51,25 +51,49 @@
                                             <td>
                                                 <a href={{ route('eventos.show', [$evento->id]) }}>
                                                     @if (strlen($evento->descricao) > 30)
-                                                                {{ substr($evento->descricao, 0, 30) }}...
-                                                            @else
-                                                                {{ $evento->descricao }}
-                                                            @endif
+                                                        {{ substr($evento->descricao, 0, 30) }}...
+                                                    @else
+                                                        {{ $evento->descricao }}
+                                                    @endif
                                                 </a>
                                             </td>
                                             <td class="align-middle text-center text-sm">
                                                 <a href={{ route('eventos.show', [$evento->id]) }}>
                                                     @if (strlen($evento->descricao) > 30)
-                                                                {{ substr($evento->localizacao, 0, 30) }}...
-                                                            @else
-                                                                {{ $evento->localizacao }}
-                                                            @endif
+                                                        {{ substr($evento->localizacao, 0, 30) }}...
+                                                    @else
+                                                        {{ $evento->localizacao }}
+                                                    @endif
                                                 </a>
                                             </td>
                                             <td class="align-middle text-center text-sm">
-                                                <span
-                                                    class="badge bg-gradient-@if ($evento->estadoEvento->id == 1)warning @elseif ($evento->estadoEvento->id == 2)success @elseif ($evento->estadoEvento->id == 3)danger @elseif ($evento->estadoEvento->id == 4)warning @endif">{{ $evento->estadoEvento->descricao }}
-                                                </span>
+                                                <?php
+                                                $labelEstadoEvento = '';
+                                                if ($evento->estadoEvento->id == 1) {
+                                                    $labelEstadoEvento = 'warning';
+                                                } elseif ($evento->estadoEvento->id == 2) {
+                                                    $labelEstadoEvento = 'success';
+                                                } elseif ($evento->estadoEvento->id == 3) {
+                                                    $labelEstadoEvento = 'secondary';
+                                                } elseif ($evento->estadoEvento->id == 4) {
+                                                    $labelEstadoEvento = 'info';
+                                                } elseif ($evento->estadoEvento->id == 5) {
+                                                    $labelEstadoEvento = 'danger';
+                                                } elseif ($evento->estadoEvento->id == 6) {
+                                                    $labelEstadoEvento = 'dark';
+                                                } else {
+                                                    $labelEstadoEvento = 'light';
+                                                }
+                                                ?>
+                                                @if ($evento->estadoEvento->id == 2)
+                                                    <span class="badge bg-gradient-{{ $labelEstadoEvento }}">Aceite -
+                                                        Aguardando pagamento
+                                                    </span>
+                                                @else
+                                                    <span
+                                                        class="badge bg-gradient-{{ $labelEstadoEvento }}">{{ $evento->estadoEvento->descricao }}
+                                                    </span>
+                                                @endif
                                             </td>
                                             <td class="align-middle text-center text-sm">
                                                 <div class="d-flex mx-auto">

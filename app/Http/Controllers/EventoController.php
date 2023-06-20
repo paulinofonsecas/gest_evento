@@ -6,6 +6,8 @@ use App\Models\Aluger;
 use App\Models\Aparelho;
 use App\Models\EstadoDeAluger;
 use App\Models\Evento;
+use App\Models\Notification;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -21,12 +23,12 @@ class EventoController extends Controller
         $user = auth()->user();
 
         if (\Gate::allows('admin')) {
-            $eventos = Evento::all();
+            $eventos = Evento::orderBy('created_at', 'desc')->get();
             return response(view('livewire.admin.admin-show-eventos', [
                 'eventos' => $eventos,
             ]));
         } else {
-            $eventos = Evento::where('user_id', $user->id)->get();
+            $eventos = Evento::where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
             return response(view('livewire.show-eventos', [
                 'eventos' => $eventos,
             ]));
@@ -46,6 +48,8 @@ class EventoController extends Controller
     public function pagamento_feito($id)
     {
         $evento = Evento::find($id);
+        $evento->estado_evento_id = EstadoDeAluger::PAGO;
+        $evento->save();
         return response(view('livewire.pagamento-feito-com-sucesso', [
             'evento' => $evento,
         ]));
@@ -57,7 +61,7 @@ class EventoController extends Controller
         $evento = Evento::find($id);
         $evento->estado_evento_id = EstadoDeAluger::CANCELADO;
         $evento->save();
-        return redirect()->route('eventos.index');
+        return redirect()->route('evento.index');
     }
 
     /**
@@ -100,7 +104,7 @@ class EventoController extends Controller
 
         // validar os campos de data
         if ($request->data_evento < now()->format('Y-m-d')) {
-            return redirect()->back()->withErrors(['data_evento' => 'A data de início deve ser maior ou igual que a data atual']);
+            return redirect()->back()->withErrors(['data_evento' => 'A data de início deve ser maior']);
         }
 
         if ($request->data_termino < now()->format('Y-m-d')) {
@@ -142,6 +146,16 @@ class EventoController extends Controller
             'user_id' => auth()->user()->id,
         ]);
 
+        // disparar notificacao para o admin baseado na classe App\Models\Notification
+        $admin = User::where('type_id', 1)->first();
+        Notification::create([
+            'title' => 'Novo evento',
+            'message' => 'Um novo evento foi criado',
+            'recipient_id' => $admin->id,
+            'sender_id' => auth()->user()->id,
+            'read' => false,
+        ]);
+
         return redirect()->route('evento.index');
 
     }
@@ -153,6 +167,7 @@ class EventoController extends Controller
     {
         $pacotes = Aparelho::all();
         $estados = EstadoDeAluger::all();
+
 
         if (\Gate::allows('admin')) {
             return response(view('livewire.admin.admin-show-evento', [
@@ -175,7 +190,36 @@ class EventoController extends Controller
     public function edit(Evento $evento): Response
     {
         $pacotes = Aparelho::all();
+
+        // se o estado for aguardando, deve mostrar apenas os estados em processo e rejeitado
         $estados = EstadoDeAluger::all();
+        if ($evento->estado_evento_id == EstadoDeAluger::AGUARDANDO) {
+            $estados = EstadoDeAluger::whereIn('id', [EstadoDeAluger::EM_PROGRESSO, EstadoDeAluger::REJEITADO])->get();
+        }
+
+        // se o estado for Em progresso, deve mostrar apenas os estados em Rejeitado e Aceito
+        if ($evento->estado_evento_id == EstadoDeAluger::EM_PROGRESSO) {
+            $estados = EstadoDeAluger::whereIn('id', [EstadoDeAluger::REJEITADO, EstadoDeAluger::ACEITE])->get();
+        }
+
+        // se o estado for Pago, deve mostrar apenas o estado Finalizado
+        if ($evento->estado_evento_id == EstadoDeAluger::PAGO) {
+            $estados = EstadoDeAluger::whereIn('id', [EstadoDeAluger::FINALIZADO])->get();
+        }
+
+        // se o estado for Cancelado, deve mostrar apenas o estado em Em progresso
+        if ($evento->estado_evento_id == EstadoDeAluger::CANCELADO) {
+            $estados = EstadoDeAluger::whereIn('id', [EstadoDeAluger::EM_PROGRESSO])->get();
+        }
+
+        // se o estado for Cancelado, deve mostrar apenas o estado em Em progresso
+        if ($evento->estado_evento_id == EstadoDeAluger::REJEITADO) {
+            $estados = EstadoDeAluger::whereIn('id', [EstadoDeAluger::EM_PROGRESSO])->get();
+        }
+
+        // adicionando o estado atual no array
+        $estados->push(EstadoDeAluger::find($evento->estado_evento_id));
+
         if (\Gate::allows('admin')) {
             return response(view('livewire.admin.admin-edit-evento', [
                 'evento' => $evento,
@@ -187,18 +231,27 @@ class EventoController extends Controller
                 'evento' => $evento,
                 'pacotes' => $pacotes,
                 'estados' => $estados,
-
             ]));
         }
     }
 
     /**
-     * Update the specified resource in storage.
+     * 44 the specified resource in storage.
      */
     public function update(Request $request, Evento $evento)
     {
         if (\Gate::allows('admin')) {
             $this->admin_update_info($request, $evento);
+
+            // notificar o user que o estado do evento foi alterado
+            Notification::create([
+                'title' => 'Estado do evento alterado',
+                'message' => 'O estado do evento foi alterado para ' . EstadoDeAluger::find($request->estado_evento_id)->descricao,
+                'recipient_id' => $evento->user_id,
+                'sender_id' => auth()->user()->id,
+                'read' => false,
+            ]);
+
             return redirect()->route('eventos.index', [$evento->id])->with('success', 'Estado do evento atualizado com sucesso');
         } else {
             $this->user_update_info($request, $evento);
@@ -223,6 +276,13 @@ class EventoController extends Controller
             $evento->update([
                 'estado_evento_id' => $request->estado_evento_id,
             ]);
+
+            // caso $evento->mensagem nao for null salva no banco
+            if ($request->mensagem) {
+                $evento->update([
+                    'mensagem' => $request->mensagem,
+                ]);
+            }
         }
     }
 
@@ -245,7 +305,7 @@ class EventoController extends Controller
 
         // validar os campos de data
         if ($request->data_evento < now()->format('Y-m-d')) {
-            return redirect()->back()->withErrors(['data_evento' => 'A data de início deve ser maior ou igual que a data atual']);
+            return redirect()->back()->withErrors(['data_evento' => 'A data de início deve ser maior']);
         }
 
         if ($request->data_termino < now()->format('Y-m-d')) {

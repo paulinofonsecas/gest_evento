@@ -58,6 +58,6 @@ class User extends Authenticatable
     // isAdmin
     public function isAdmin()
     {
-        return $this->type_id == Usertype::ADMIN;
+        return $this->type_id == Usertype::ADMIN || $this->type_id == Usertype::GERENTE;
     }
 }

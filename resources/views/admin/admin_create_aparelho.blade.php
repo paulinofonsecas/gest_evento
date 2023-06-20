@@ -20,7 +20,6 @@
                     <div class="input-group input-group-outline mb-4">
                         <label for="descricao">Descrição</label>
                         <textarea class="form-control" name="descricao" id="descricao" rows="3" placeholder="Descreva o aparelho"></textarea>
-
                     </div>
 
                     <div class="input-group input-group-outline mb-4">

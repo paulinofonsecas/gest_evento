@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
  */
 class UserFactory extends Factory
 {
+
     /**
      * Define the model's default state.
      *
@@ -19,10 +20,10 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name,
+            'name' => 'johndoe',
             'bi' => $this->faker->randomNumber(9) . $this->faker->randomNumber(5),
             'type_id' => $this->faker->numberBetween(1, 2),
-            'email' => $this->faker->unique()->safeEmail,
+            'email' => 'johndoe@example.com',
             'email_verified_at' => now(),
             'password' => Hash::make('password'), // A senha pode ser personalizada de acordo com suas necessidades
             'remember_token' => Str::random(10),

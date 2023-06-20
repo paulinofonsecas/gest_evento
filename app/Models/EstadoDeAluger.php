@@ -12,10 +12,11 @@ class EstadoDeAluger extends Model
     public const AGUARDANDO = 1;
     public const ACEITE = 2;
     public const EM_PROGRESSO = 4;
-    public const REJEITADO = 6;
-    public const CANCELADO = 7;
-    public const AGUARDADNDO_PAGAMENTO = 5;
+    public const REJEITADO = 5;
+    public const CANCELADO = 6;
+    public const AGUARDADNDO_PAGAMENTO = 7;
     public const FINALIZADO = 3;
+    public const PAGO = 8;
 
     protected $fillable = [
         'descricao',

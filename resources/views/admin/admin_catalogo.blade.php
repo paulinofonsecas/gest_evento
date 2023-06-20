@@ -9,7 +9,7 @@
                     <div class="card" data-animation="true">
                         <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                             <a class="d-block blur-shadow-image">
-                                <img src="{{ url('/storage/aparelhos/' . $aparelho->image_url) }}"
+                                <img src="{{ url('/storage/aparelhos/OIP_1684131692.jpg') }}"
                                     style="height: 283.027px; width: 100%; object-fit: cover" alt="img-blur-shadow"
                                     class="img-fluid shadow-lg border-radius-lg">
                             </a>

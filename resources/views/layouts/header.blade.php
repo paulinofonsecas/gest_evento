@@ -21,6 +21,7 @@
     <script src={{ asset('theme2/plugins/sweetalert2/sweetalert2.min.js') }}></script>
     <!-- import Select2 from theme/pluggins -->
     <link rel="stylesheet" href={{ asset('theme2/plugins/select2/css/select2.min.css') }}>
+    <link rel="stylesheet" href={{ asset('theme/plugins/fullcalendar/main.css') }}>
 
     <!-- CSS Files -->
     <link id="pagestyle" href={{ asset('theme2/assets/css/material-dashboard.css') }} rel="stylesheet" />

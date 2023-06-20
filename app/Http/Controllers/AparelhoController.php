@@ -84,7 +84,7 @@ class AparelhoController extends Controller
         if (Gate::allows('admin')) {
             return response(
                 view(
-                    'livewire.admin.show-aparelho',
+                    // 'livewire.admin.show-aparelho',
                     ['aparelho' => $aparelho]
                 )
             );

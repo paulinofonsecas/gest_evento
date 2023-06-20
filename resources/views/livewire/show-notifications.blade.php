@@ -1,40 +1,19 @@
-<script src={{ asset('theme/plugins/fullcalendar/main.js') }}></script>
-<script>
-    var eventoss = [
-
-        @foreach ($eventos as $evento)
-            {
-                title: @if ($evento->user->id == Auth::user()->id)
-                    '{{ $evento->estadoEvento->descricao }}',
-                @else
-                    '{{ $evento->data_evento }} - {{ $evento->data_termino }}',
-                @endif
-                start: '{{ $evento->data_evento }}',
-                end: '{{ $evento->data_termino }}',
-                @if ($evento->user->id == Auth::user()->id)
-                    url: '{{ route('evento.show', $evento->id) }}',
-                @endif
-                backgroundColor: @if ($evento->user_id == Auth::user()->id)
-                    '{{ $evento->backgroundColor() }}',
-                @else
-                    '#f5365c',
-                @endif
-                allDay: true,
-            },
-        @endforeach
-    ];
-</script>
-@include('layouts.header', ['pageTitle' => 'Eventos'])
+<!-- caso o usuario for admin -->
+@if (Auth::user()->type_id == 1 || Auth::user()->type_id == 3)
+    @include('layouts.admin.header', ['pageTitle' => 'Eventos'])
+@else
+    @include('layouts.header', ['pageTitle' => 'Eventos'])
+@endif
 
 <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
     <div class="container-fluid py-4">
-        <div class="row  mb-4">
-            <div class="col-lg-12 col-md-6 mb-md-0 mb-4">
+        <div class="row mt-4 mb-4">
+            <div class="col-lg-12 col-md-6 mb-md-4 mb-4">
                 <div class="card">
                     <div class="card-header pb-0">
                         <div class="row">
                             <div class="col-lg-6 col-7">
-                                <h6>Notificações não lidas</h6>
+                                <h3>Todas Notificações</h3>
                             </div>
                             <div class="col-lg-6 col-5 my-auto text-end">
                                 <div class="dropdown float-lg-end pe-4">
@@ -73,10 +52,13 @@
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Data</th>
+                                        <th
+                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Estado</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($notificacoes as $notificao)
+                                    @foreach ($notifications as $notificao)
                                         <tr>
                                             <td>
                                                 <a href="{{ route('notifications.show', [$notificao]) }}">
@@ -124,6 +106,15 @@
                                                     {{ $notificao->created_at }}
                                                 </a>
                                             </td>
+                                            <td class="align-middle  text-sm">
+                                                <a href="{{ route('notifications.show', [$notificao]) }}">
+                                                    @if ($notificao->read)
+                                                        <span class="badge badge-sm bg-gradient-success">Lida</span>
+                                                    @else
+                                                        <span class="badge badge-sm bg-gradient-danger">Não Lida</span>
+                                                    @endif
+                                                </a>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -132,19 +123,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="row mt-4 mb-2">
-                <div class="card mx-3">
-                    <div class="card-body text-center">
-                        <h3 class="">Calendario da empresa</h3>
-                        <div>
-                            <div class="col-lg-8 mx-auto col-md-6 mb-md-4 mb-4" id="calendar">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
 
@@ -155,30 +133,5 @@
         <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 435px;"></div>
     </div>
 </main>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-            headerToolbar: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'dayGridMonth,timeGridWeek,timeGridDay'
-            },
-            dateClick: function(info) {
-                alert('Date: ' + info.dateStr);
-                alert('Resource ID: ' + info.resource.id);
-            },
-            titleFormat: {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            },
-            events: eventoss
-        });
-
-        calendar.render();
-    });
-</script>
 
 @include('layouts.footer')

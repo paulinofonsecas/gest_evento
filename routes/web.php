@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
+use App\Models\Notification;
 use App\Http\Controllers\AlugerController;
 use App\Http\Controllers\EventoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AparelhoController;
-use App\Http\Controllers\AdminCatalogoController;
+use App\Http\Controllers\NotificationController;
 use App\Models\Evento;
 use App\Models\Usertype;
 use Illuminate\Support\Facades\Route;
@@ -24,17 +26,22 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
-Route::get('/dashboard', function () {
-    $user = Auth()->user();
-    if ($user->type_id == Usertype::ADMIN) {
-        return redirect()->route('admin_dashboard');
-    } else {
-        $eventos = Evento::where('data_evento', '>=', now()->format('Y-m-d'))->orderBy('data_evento', 'asc')->take(10)->get();
-        return view('livewire.my-dashboard', [
-            'eventos' => $eventos,
-        ]);
-    }
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Notificações
+Route::middleware('auth')->group(function () {
+    // Rota para exibir todas as notificações
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+
+    // Rota para marcar uma notificação como lida
+    Route::put('/notifications/{notification}', [NotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
+
+    // Rota para excluir uma notificação
+    Route::delete('/notifications/{notification}', [NotificationController::class, 'destroy'])->name('notifications.destroy');
+
+    // Rota para mostrar uma notificação
+    Route::get('/notifications/{notification}', [NotificationController::class, 'show'])->name('notifications.show');
+});
+
+Route::get('/dashboard', [DashboardController::class, 'buildUserDashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/catalogo', function () {
     return view('catalogo');
@@ -60,9 +67,9 @@ Route::group(['middleware' => ['auth', 'verified', 'can:normal']], function () {
     Route::get('/evento/delete/{id}', [EventoController::class, 'destroy'])->name('evento.delete');
 
     // rotas customizadas
-    Route::resource('evento', EventoController::class)->middleware(['auth', 'verified', 'can:normal']);
+    Route::resource('evento', EventoController::class)->middleware(['auth', 'verified']);
     Route::get('/evento/pagamento/{id}', [EventoController::class, 'add_meio_de_pagamento'])->middleware(['auth', 'verified', 'can:normal'])->name('evento.meioPagamento');
-    Route::get('/evento/cancelar', [EventoController::class, 'cancelar_evento'])->middleware(['auth', 'verified', 'can:normal'])->name('evento.cancelar');
+    Route::get('/evento/cancelar/{id}', [EventoController::class, 'cancelar_evento'])->middleware(['auth', 'verified'])->name('evento.cancelar');
     Route::get('/evento/pagamentoFeito/{id}', [EventoController::class, 'pagamento_feito'])->middleware(['auth', 'verified', 'can:normal'])->name('evento.pagamentoFeito');
 });
 
@@ -74,3 +81,4 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/admin.php';
+require __DIR__ . '/gerente.php';

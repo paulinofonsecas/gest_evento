@@ -26,8 +26,8 @@
                             <div class="row col-lg-8 justify-content-center">
                                 <div class="input-group input-group-static mb-4">
                                     <label for="pacote">Estado da solicitação</label>
-                                    <select class="form-control primary" id="exampleFormControlSelect1" required
-                                        name="estado_evento_id" id="estado_evento_id" style="width: 100%">
+                                    <select class="form-control primary mb-4" id="exampleFormControlSelect1" required
+                                        name="estado_evento_id" autofocus id="estado_evento_id" style="width: 100%">
                                         @foreach ($estados as $estado)
                                             {{ $selected = $estado->id == $evento->estado_evento_id ? 'selected' : '' }}
                                             <option {{ $selected }} value="{{ $estado->id }}">
@@ -35,7 +35,14 @@
                                             </option>
                                         @endforeach
                                     </select>
+                                    <div class="input-group input-group-outline mb-3">
+                                        <label for="mensagem">Mensagem (Opcional)</label>
+                                        <textarea class="form-control" name="mensagem" id="mensagem" rows="3"
+                                            placeholder="Mensagem referente a alteração de estado"></textarea>
+                                    </div>
                                 </div>
+
+                                <button type="submit" class=" col-6 btn btn-primary">Processar pedido</button>
 
                                 <div class="input-group input-group-static mb-4">
                                     <label for="descricao">Data do evento</label>
@@ -75,7 +82,6 @@
                                     </select>
                                 </div>
 
-                                <button type="submit" class=" col-6 btn btn-primary">Processar pedido</button>
                             </div>
                             <div class="col"></div>
                         </div>

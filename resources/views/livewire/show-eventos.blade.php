@@ -10,7 +10,7 @@
                                 <h6>Meus Eventos</h6>
                             </div>
                             <div class="col-lg-6 col-5 my-auto text-end">
-                                <a hrdef="{{ route('evento.create') }}" class="btn btn-link ">Novo evento</a>
+                                <a href="{{ route('evento.create') }}" class="btn btn-link ">Novo evento</a>
                             </div>
                         </div>
                     </div>
@@ -25,12 +25,12 @@
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Localização</th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Data inicio</th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Data termino</th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Estado</th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Data inicio</th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Data termino</th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Estado</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -75,9 +75,33 @@
                                                 </a>
                                             </td>
                                             <td class="align-middle text-center text-sm">
-                                                <span
-                                                    class="badge bg-gradient-@if ($evento->estadoEvento->id == 1)warning @elseif ($evento->estadoEvento->id == 2)success @elseif ($evento->estadoEvento->id == 3)danger @elseif ($evento->estadoEvento->id == 4)warning @endif">{{ $evento->estadoEvento->descricao }}
-                                                </span>
+                                                <?php
+                                                $labelEstadoEvento = '';
+                                                if ($evento->estadoEvento->id == 1) {
+                                                    $labelEstadoEvento = 'warning';
+                                                } elseif ($evento->estadoEvento->id == 2) {
+                                                    $labelEstadoEvento = 'success';
+                                                } elseif ($evento->estadoEvento->id == 3) {
+                                                    $labelEstadoEvento = 'secondary';
+                                                } elseif ($evento->estadoEvento->id == 4) {
+                                                    $labelEstadoEvento = 'info';
+                                                } elseif ($evento->estadoEvento->id == 5) {
+                                                    $labelEstadoEvento = 'danger';
+                                                } elseif ($evento->estadoEvento->id == 6) {
+                                                    $labelEstadoEvento = 'dark';
+                                                } else {
+                                                    $labelEstadoEvento = 'light';
+                                                }
+                                                ?>
+                                                @if ($evento->estadoEvento->id == 2)
+                                                    <span class="badge bg-gradient-{{ $labelEstadoEvento }}">Aceite -
+                                                        Faça o pagamento
+                                                    </span>
+                                                @else
+                                                    <span
+                                                        class="badge bg-gradient-{{ $labelEstadoEvento }}">{{ $evento->estadoEvento->descricao }}
+                                                    </span>
+                                                @endif
                                             </td>
 
                                         </tr>

@@ -60,6 +60,10 @@
                                             @endforeach
                                         </select>
                                     </div>
+                                    <div class="input-group input-group-outline mb-3">
+                                        <label for="descricao">Descrição (Opcional)</label>
+                                        <textarea class="form-control" name="descricao" id="descricao" rows="3" placeholder="Descreva o aparelho"></textarea>
+                                    </div>
                                 </div>
                                 <div class="modal-footer justify-content-between">
                                     <a href="{{ route('evento.show', $evento->id) }}" class="btn btn-default"

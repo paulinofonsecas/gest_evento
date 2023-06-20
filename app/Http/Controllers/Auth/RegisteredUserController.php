@@ -23,6 +23,7 @@ class RegisteredUserController extends Controller
     {
         return view('auth.register', [
             'usertypes' => Usertype::all(),
+            'is_admin' => 'false',
         ]);
     }
 
@@ -31,7 +32,7 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -39,6 +40,7 @@ class RegisteredUserController extends Controller
             'bi' => ['required', 'string'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
+
 
         // se existir a repetição do BI retornar uma mensagem de erro
         if (User::where('bi', $request->bi)->exists()) {
@@ -49,22 +51,32 @@ class RegisteredUserController extends Controller
         if (User::where('email', $request->email)->exists()) {
             return redirect()->back()->withErrors(['email' => 'O email que está tentando inserir já existe']);
         }
+        if ($request->role == 'admin') {
+            $type_id = UserType::ADMIN;
+        }
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'bi' => $request->bi,
-
-            'type_id' => UserType::NORMAL,
+            'type_id' => $type_id,
             'password' => Hash::make($request->password),
         ]);
 
         event(new Registered($user));
 
+        if ($request->role == 'admin') {
+            if ($user->type_id == Usertype::ADMIN || $user->type_id == Usertype::GERENTE) {
+                return redirect()->intended(RouteServiceProvider::HOME_ADMIN);
+            } else {
+                return redirect()->intended(RouteServiceProvider::HOME);
+            }
+        }
+
         Auth::login($user);
         $user = Auth::user();
 
-        if ($user->type_id == UserType::ADMIN) {
+        if ($user->type_id == Usertype::ADMIN || $user->type_id == Usertype::GERENTE) {
             return redirect()->intended(RouteServiceProvider::HOME_ADMIN);
         } else {
             return redirect()->intended(RouteServiceProvider::HOME);

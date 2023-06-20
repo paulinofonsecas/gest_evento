@@ -11,7 +11,7 @@ class Usertype extends Model
 
     public const ADMIN = 1;
     public const NORMAL = 2;
-    public const CONVIDADO = 3;
+    public const GERENTE = 3;
 
     protected $fillable = [
         'descricao',

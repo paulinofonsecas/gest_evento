@@ -25,11 +25,7 @@
 <script async="" defer="" src="https://buttons.github.io/buttons.js"></script>
 
 <script src={{ asset('theme2/assets/js/material-dashboard.min.js?v=3.0.5') }}></script>
-<script defer=""
-    src="https://static.cloudflareinsights.com/beacon.min.js/v2b4487d741ca48dcbadcaf954e159fc61680799950996"
-    integrity="sha512-D/jdE0CypeVxFadTejKGTzmwyV10c1pxZk/AqjJuZbaJwGMyNHY3q/mTPWqMUnFACfCTunhZUVcd4cV78dK1pQ=="
-    data-cf-beacon="{&quot;rayId&quot;:&quot;7b69c96d3f0c3eb1&quot;,&quot;version&quot;:&quot;2023.3.0&quot;,&quot;r&quot;:1,&quot;token&quot;:&quot;1b7cbb72744b40c580f8633c6b62637e&quot;,&quot;si&quot;:100}"
-    crossorigin="anonymous"></script>
+
 
 <div id="imageDownloaderSidebarContainer">
     <div class="image-downloader-ext-container">
@@ -211,22 +207,6 @@
         }
         return null
     }
-
-    function createOfferBar() {
-        var b = document.createElement("div");
-        b.setAttribute("id", "ofBar");
-        b.innerHTML =
-            "\x3cdiv id\x3d'ofBar-logo'\x3e \x3cimg alt\x3d'creative-tim-logo' src\x3d'https://s3.amazonaws.com/creativetim_bucket/static-assets/logo-ct-black.png'\x3e\x3c/div\x3e\x3cdiv id\x3d'ofBar-content'\x3e\ud83c\udf37 Select your favorite \x3cb\x3eSpring Bundle\x3c/b\x3e and enjoy a whopping \x3cb\x3e85% discount\x3c/b\x3e on its price \u23f0 3 Days Left\x3c/div\x3e\x3cdiv id\x3d'ofBar-right'\x3e\x3ca href\x3d'https://www.creative-tim.com/campaign?ref\x3dct-demos' target\x3d'_blank' id\x3d'btn-bar'\x3eView Offer\x3c/a\x3e\x3ca id\x3d'close-bar'\x3e\u00d7\x3c/a\x3e\x3c/div\x3e";
-        document.body.insertBefore(b,
-            document.body.firstChild)
-    }
-
-    function closeOfferBar() {
-        document.getElementById("ofBar").setAttribute("style", "display:none");
-        setCookie("view_offer_bar", "true", 1)
-    }
-    var value = readCookie("view_offer_bar");
-    null == value && (createOfferBar(), document.getElementById("close-bar").addEventListener("click", closeOfferBar));
 </script>
 <script type="text/javascript" id="">
     ! function(d, g, e) {

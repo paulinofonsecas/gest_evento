@@ -6,8 +6,8 @@
             aria-hidden="true" id="iconSidenav"></i>
         <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/material-dashboard/pages/dashboard "
             target="_blank">
-            <i class="fa-solid fa-calendar-days fa-2xl" style="color: #fff40b87;"></i>
-            <span class="ms-1 font-weight-bold text-white">Material Dashboard 2</span>
+            <img src="{{ url('/storage/calendar.png') }}" class="navbar-brand-img h-100" alt="main_logo">
+            <span class="ms-1 font-weight-bold text-white">Gestão de Eventos</span>
         </a>
     </div>
     <hr class="horizontal light mt-0 mb-2">
@@ -31,6 +31,20 @@
                     <span class="nav-link-text ms-1">Pacotes</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link text-white {{ request()->routeIs('notifications.index') ? 'active bg-gradient-primary' : '' }} "
+                    href="{{ route('notifications.index') }}">
+                    <span class="nav-link-text ms-1">Notificações</span>
+                </a>
+            </li>
+            @if (Auth::user()->type_id == 3)
+                <li class="nav-item">
+                    <a class="nav-link text-white {{ request()->routeIs('administradores.index') ? 'active bg-gradient-primary' : '' }} "
+                        href="{{ route('administradores.index') }}">
+                        <span class="nav-link-text ms-1">Administradores</span>
+                    </a>
+                </li>
+            @endif
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Paginas do usuario
                 </h6>
